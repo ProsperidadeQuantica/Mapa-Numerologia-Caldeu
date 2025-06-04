@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Caldeu de Numerologia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e8e8e8;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            color: #c9c9c9;
+            font-style: italic;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .calculator-section {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-section {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .chaldean-table {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .letter-box {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .letter-box:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .letter {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .number {
+            font-size: 0.9em;
+            color: #e8e8e8;
+            margin-top: 4px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e8e8e8;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .result {
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .result-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .result-calculation {
+            color: #c9c9c9;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .interpretation {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #ffd700;
+        }
+
+        .interpretation h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .legend-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .legend-meaning {
+            font-size: 0.9em;
+            color: #c9c9c9;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .chaldean-table {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .legend {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔮 Mapa Caldeu de Numerologia</h1>
+        <p class="subtitle">Sistema Antigo de Correspondências Numerológicas</p>
+
+        <div class="grid-container">
+            <div class="calculator-section">
+                <h2>📊 Calculadora Caldeia</h2>
+                <div class="input-group">
+                    <label for="nameInput">Digite seu nome ou palavra:</label>
+                    <input type="text" id="nameInput" placeholder="Ex: Maria Silva" oninput="calculateChaldean()">
+                </div>
+                
+                <div id="result" class="result" style="display: none;">
+                    <div class="result-number" id="resultNumber">0</div>
+                    <div class="result-calculation" id="resultCalculation"></div>
+                    <div class="interpretation" id="interpretation"></div>
+                </div>
+            </div>
+
+            <div class="table-section">
+                <h2>📋 Tabela de Correspondências</h2>
+                <div class="chaldean-table" id="chaldeanTable"></div>
+            </div>
+        </div>
+
+        <div class="interpretation">
+            <h3>🌟 Significados dos Números Caldeus</h3>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-number">1</div>
+                    <div class="legend-meaning">Liderança, Independência</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">2</div>
+                    <div class="legend-meaning">Cooperação, Diplomacia</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">3</div>
+                    <div class="legend-meaning">Criatividade, Comunicação</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">4</div>
+                    <div class="legend-meaning">Estabilidade, Organização</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">5</div>
+                    <div class="legend-meaning">Liberdade, Aventura</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">6</div>
+                    <div class="legend-meaning">Responsabilidade, Cuidado</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">7</div>
+                    <div class="legend-meaning">Espiritualidade, Mistério</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">8</div>
+                    <div class="legend-meaning">Poder Material, Sucesso</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tabela Caldeia - não inclui o número 9 (considerado sagrado)
+        const chaldeanValues = {
+            'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
+            'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
+            'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
+        };
+
+        const interpretations = {
+            1: "Número da Liderança - Você possui características de pioneiro, independência e originalidade. É natural para liderar e iniciar novos projetos.",
+            2: "Número da Cooperação - Você tem habilidades diplomáticas, é sensível às necessidades dos outros e trabalha bem em equipe.",
+            3: "Número da Criatividade - Você é comunicativo, criativo e tem talento artístico. Inspira e entretém as pessoas ao seu redor.",
+            4: "Número da Estabilidade - Você é prático, organizado e confiável. Constrói bases sólidas e valoriza a segurança.",
+            5: "Número da Liberdade - Você ama aventuras, mudanças e experiências novas. É versátil e tem espírito livre.",
+            6: "Número da Responsabilidade - Você é cuidadoso, protetor e responsável. Tem forte senso de família e comunidade.",
+            7: "Número da Espiritualidade - Você é intuitivo, misterioso e busca conhecimento profundo. Tem conexão com o espiritual.",
+            8: "Número do Poder Material - Você tem habilidades para negócios, ambição e potencial para alcançar sucesso material.",
+            9: "Número da Sabedoria Universal - Você é compassivo, generoso e tem visão humanitária ampla."
+        };
+
+        // Criar tabela visual
+        function createChaldeanTable() {
+            const table = document.getElementById('chaldeanTable');
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            
+            for (let letter of alphabet) {
+                const letterBox = document.createElement('div');
+                letterBox.className = 'letter-box';
+                letterBox.innerHTML = `
+                    <div class="letter">${letter}</div>
+                    <div class="number">${chaldeanValues[letter]}</div>
+                `;
+                table.appendChild(letterBox);
+            }
+        }
+
+        // Calcular número caldeu
+        function calculateChaldean() {
+            const input = document.getElementById('nameInput').value.toUpperCase();
+            const result = document.getElementById('result');
+            
+            if (!input.trim()) {
+                result.style.display = 'none';
+                return;
+            }
+
+            let total = 0;
+            let calculation = '';
+            let validLetters = '';
+
+            for (let char of input) {
+                if (chaldeanValues[char]) {
+                    total += chaldeanValues[char];
+                    validLetters += char;
+                    calculation += `${char}(${chaldeanValues[char]}) + `;
+                }
+            }
+
+            if (total === 0) {
+                result.style.display = 'none';
+                return;
+            }
+
+            calculation = calculation.slice(0, -3); // Remove último " + "
+            
+            // Reduzir a um dígito (exceto números mestres)
+            let finalNumber = total;
+            let reductionSteps = `= ${total}`;
+            
+            while (finalNumber > 9 && ![11, 22, 33].includes(finalNumber)) {
+                let digits = finalNumber.toString().split('').map(Number);
+                finalNumber = digits.reduce((a, b) => a + b, 0);
+                reductionSteps += ` → ${digits.join(' + ')} = ${finalNumber}`;
+            }
+
+            // Mostrar resultado
+            document.getElementById('resultNumber').textContent = finalNumber;
+            document.getElementById('resultCalculation').innerHTML = `
+                <strong>Cálculo:</strong> ${calculation} ${reductionSteps}
+            `;
+            
+            document.getElementById('interpretation').innerHTML = `
+                <h3>✨ Interpretação do Número ${finalNumber}</h3>
+                <p>${interpretations[finalNumber] || 'Número especial com energia única.'}</p>
+            `;
+            
+            result.style.display = 'block';
+        }
+
+        // Inicializar
+        createChaldeanTable();
+    </script>
+</body>
+</html>
