@@ -127,6 +127,10 @@
                 grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas menores */
             }
         }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -197,45 +201,40 @@
                 </div>
             </div>
         </div>
+
+        <h3>🗓️ Calculando o Caminho de Vida</h3>
+        <div class="input-group">
+            <label for="birthDate">Digite sua data de nascimento:</label>
+            <input type="date" id="birthDate" onchange="calculateLifePath()">
+        </div>
+        
+        <div id="lifePathResult" style="display: none;">
+            <h4>Seu Caminho de Vida:</h4>
+            <p id="lifePathNumber"></p>
+        </div>
     </div>
 
     <script>
-        // Tabela Caldeia - não inclui o número 9 (considerado sagrado)
-        const chaldeanValues = {
-            'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
-            'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
-            'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
-        };
+        // Função para calcular o número do Caminho de Vida
+        function calculateLifePath() {
+            const birthDate = document.getElementById('birthDate').value;
+            if (!birthDate) return;
 
-        const interpretations = {
-            1: "Número da Liderança - Você possui características de pioneiro, independência e originalidade. É natural para liderar e iniciar novos projetos.",
-            2: "Número da Cooperação - Você tem habilidades diplomáticas, é sensível às necessidades dos outros e trabalha bem em equipe.",
-            3: "Número da Criatividade - Você é comunicativo, criativo e tem talento artístico. Inspira e entretém as pessoas ao seu redor.",
-            4: "Número da Estabilidade - Você é prático, organizado e confiável. Constrói bases sólidas e valoriza a segurança.",
-            5: "Número da Liberdade - Você ama aventuras, mudanças e experiências novas. É versátil e tem espírito livre.",
-            6: "Número da Responsabilidade - Você é cuidadoso, protetor e responsável. Tem forte senso de família e comunidade.",
-            7: "Número da Espiritualidade - Você é intuitivo, misterioso e busca conhecimento profundo. Tem conexão com o espiritual.",
-            8: "Número do Poder Material - Você tem habilidades para negócios, ambição e potencial para alcançar sucesso material.",
-            9: "Número da Sabedoria Universal - Você é compassivo, generoso e tem visão humanitária ampla."
-        };
+            const date = new Date(birthDate);
+            const day = date.getDate();
+            const month = date.getMonth() + 1; // Janeiro é 0
+            const year = date.getFullYear();
 
-        // Criar tabela visual
-        function createChaldeanTable() {
-            const table = document.getElementById('chaldeanTable');
-            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            
-            for (let letter of alphabet) {
-                const letterBox = document.createElement('div');
-                letterBox.className = 'letter-box';
-                letterBox.innerHTML = `
-                    <div class="letter">${letter}</div>
-                    <div class="number">${chaldeanValues[letter]}</div>
-                `;
-                table.appendChild(letterBox);
+            let sum = day + month + year.toString().split('').reduce((acc, num) => acc + parseInt(num), 0);
+            while (sum > 9 && ![11, 22, 33].includes(sum)) {
+                sum = sum.toString().split('').reduce((acc, num) => acc + parseInt(num), 0);
             }
+
+            document.getElementById('lifePathNumber').textContent = sum;
+            document.getElementById('lifePathResult').style.display = 'block';
         }
 
-        // Calcular número caldeu
+        // Função para calcular o número caldeu
         function calculateChaldean() {
             const input = document.getElementById('nameInput').value.toUpperCase();
             const result = document.getElementById('result');
