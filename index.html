@@ -87,146 +87,44 @@
             text-align: center;
         }
 
-        .chaldean-table {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .letter-box {
-            background: rgba(255, 105, 180, 0.1); /* Rosa claro */
-            border: 1px solid rgba(255, 105, 180, 0.3); /* Borda rosa */
-            border-radius: 8px;
-            padding: 12px 8px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .letter-box:hover {
-            background: rgba(255, 105, 180, 0.2); /* Rosa claro */
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2); /* Rosa */
-        }
-
-        .letter {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #ff66b2; /* Rosa */
-        }
-
-        .number {
-            font-size: 0.9em;
-            color: #e8e8e8;
-            margin-top: 4px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #ff66b2; /* Rosa */
-            font-weight: bold;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid rgba(255, 105, 180, 0.3); /* Borda rosa */
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #e8e8e8;
-            font-size: 1.1em;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #ff66b2; /* Rosa */
-            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3); /* Rosa */
-        }
-
-        .result {
-            background: rgba(255, 105, 180, 0.1); /* Rosa claro */
-            border: 2px solid rgba(255, 105, 180, 0.3); /* Borda rosa */
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .result-number {
-            font-size: 3em;
-            font-weight: bold;
-            color: #ff66b2; /* Rosa */
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5); /* Rosa */
-        }
-
-        .result-calculation {
-            color: #c9c9c9;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-        }
-
-        .interpretation {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 20px;
-            border-left: 4px solid #ff66b2; /* Rosa */
-        }
-
-        .interpretation h3 {
-            color: #ff66b2; /* Rosa */
-            margin-bottom: 10px;
-        }
-
+        /* Novo estilo para os significados dos números */
         .legend {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+            gap: 15px;
             margin-top: 20px;
         }
 
         .legend-item {
             background: rgba(255, 105, 180, 0.1); /* Rosa claro */
-            border-radius: 8px;
-            padding: 10px;
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
-            border: 1px solid rgba(255, 105, 180, 0.2); /* Borda rosa */
+            border: 1px solid rgba(255, 105, 180, 0.3); /* Borda rosa */
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 105, 180, 0.2); /* Efeito hover */
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2); /* Efeito de sombra */
         }
 
         .legend-number {
-            font-size: 1.5em;
+            font-size: 2em;
             font-weight: bold;
             color: #ff66b2; /* Rosa */
+            margin-bottom: 10px;
         }
 
         .legend-meaning {
-            font-size: 0.9em;
+            font-size: 1em;
             color: #c9c9c9;
-            margin-top: 5px;
         }
 
         @media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .chaldean-table {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
             .legend {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            h1 {
-                font-size: 2em;
+                grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas menores */
             }
         }
     </style>
@@ -263,35 +161,39 @@
             <div class="legend">
                 <div class="legend-item">
                     <div class="legend-number">1</div>
-                    <div class="legend-meaning">Liderança, Independência</div>
+                    <div class="legend-meaning">SER, ECO, LIDERANÇA, RECURSOS PESSOAIS, IDENTIDADE PESSOAL</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">2</div>
-                    <div class="legend-meaning">Cooperação, Diplomacia</div>
+                    <div class="legend-meaning">DUALIDADE, SENTIMENTOS, CARINHO, OU DESEQUILÍBRIO, A MENTE CONSCIENTE</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">3</div>
-                    <div class="legend-meaning">Criatividade, Comunicação</div>
+                    <div class="legend-meaning">CRIATIVIDADE PESSOAL, AÇÕES, CONTUNDÊNCIA, INICIATIVA, SERVIÇO</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">4</div>
-                    <div class="legend-meaning">Estabilidade, Organização</div>
+                    <div class="legend-meaning">PENSAMENTO LÓGICO, PRATICIDADE, INSTINTOS, O MUNDO CONCRETO, MATERIAL</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">5</div>
-                    <div class="legend-meaning">Liberdade, Aventura</div>
+                    <div class="legend-meaning">OS SENTIDOS, EXPANSÃO, FLEXIBILIDADE, TOLERÂNCIA, APRENDIZAGEM</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">6</div>
-                    <div class="legend-meaning">Responsabilidade, Cuidado</div>
+                    <div class="legend-meaning">CRIATIVIDADE INTELECTUAL, IMAGINAÇÃO, FANTASIA, PENSAMENTO ABSTRATO, TEORIA</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">7</div>
-                    <div class="legend-meaning">Espiritualidade, Mistério</div>
+                    <div class="legend-meaning">ESTABELECER LIMITES, TEMPO, APEGOS MATERIAIS, OS LIMITES DO MUNDO MATERIAL, A PONTE PARA O MUNDO ESPIRITUAL</div>
                 </div>
                 <div class="legend-item">
                     <div class="legend-number">8</div>
-                    <div class="legend-meaning">Poder Material, Sucesso</div>
+                    <div class="legend-meaning">A MENTE INCONSCIENTE, TRANSFORMAÇÃO DO MATERIAL, ESPAÇO ATEMPORAL, AMBOS E EQUILÍBRIO, DHARMA: FAZER O QUE DEVE SER FEITO</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-number">9</div>
+                    <div class="legend-meaning">CRIATIVIDADE ESPIRITUAL, AMOR DIVINO, TALENTOS INATOS, COMPLETUDE, CARMA: RECOMPENSA POR AÇÕES DE VIDAS ANTERIORES</div>
                 </div>
             </div>
         </div>
