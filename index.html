@@ -34,11 +34,11 @@
             text-align: center;
             font-size: 2.5em;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            background: linear-gradient(45deg, #ff66b2, #ff66b2); /* Alterado para rosa */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 30px rgba(255, 105, 180, 0.3); /* Alterado para rosa */
         }
 
         .subtitle {
@@ -71,7 +71,7 @@
         }
 
         h2 {
-            color: #ffd700;
+            color: #ff66b2; /* Alterado para rosa */
             margin-bottom: 20px;
             font-size: 1.4em;
             text-align: center;
@@ -85,8 +85,8 @@
         }
 
         .letter-box {
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 105, 180, 0.1); /* Alterado para rosa claro */
+            border: 1px solid rgba(255, 105, 180, 0.3); /* Alterado para borda rosa */
             border-radius: 8px;
             padding: 12px 8px;
             text-align: center;
@@ -94,15 +94,15 @@
         }
 
         .letter-box:hover {
-            background: rgba(255, 215, 0, 0.2);
+            background: rgba(255, 105, 180, 0.2); /* Alterado para rosa claro */
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.2); /* Alterado para rosa */
         }
 
         .letter {
             font-size: 1.2em;
             font-weight: bold;
-            color: #ffd700;
+            color: #ff66b2; /* Alterado para rosa */
         }
 
         .number {
@@ -118,14 +118,14 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: #ffd700;
+            color: #ff66b2; /* Alterado para rosa */
             font-weight: bold;
         }
 
         input[type="text"] {
             width: 100%;
             padding: 12px;
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            border: 2px solid rgba(255, 105, 180, 0.3); /* Alterado para rosa */
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.05);
             color: #e8e8e8;
@@ -135,13 +135,13 @@
 
         input[type="text"]:focus {
             outline: none;
-            border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            border-color: #ff66b2; /* Alterado para rosa */
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.3); /* Alterado para rosa */
         }
 
         .result {
-            background: rgba(255, 215, 0, 0.1);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 105, 180, 0.1); /* Alterado para rosa claro */
+            border: 2px solid rgba(255, 105, 180, 0.3); /* Alterado para borda rosa */
             border-radius: 12px;
             padding: 20px;
             margin-top: 20px;
@@ -151,9 +151,9 @@
         .result-number {
             font-size: 3em;
             font-weight: bold;
-            color: #ffd700;
+            color: #ff66b2; /* Alterado para rosa */
             margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5); /* Alterado para rosa */
         }
 
         .result-calculation {
@@ -167,11 +167,11 @@
             border-radius: 10px;
             padding: 20px;
             margin-top: 20px;
-            border-left: 4px solid #ffd700;
+            border-left: 4px solid #ff66b2; /* Alterado para rosa */
         }
 
         .interpretation h3 {
-            color: #ffd700;
+            color: #ff66b2; /* Alterado para rosa */
             margin-bottom: 10px;
         }
 
@@ -183,17 +183,17 @@
         }
 
         .legend-item {
-            background: rgba(255, 215, 0, 0.1);
+            background: rgba(255, 105, 180, 0.1); /* Alterado para rosa claro */
             border-radius: 8px;
             padding: 10px;
             text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.2);
+            border: 1px solid rgba(255, 105, 180, 0.2); /* Alterado para borda rosa */
         }
 
         .legend-number {
             font-size: 1.5em;
             font-weight: bold;
-            color: #ffd700;
+            color: #ff66b2; /* Alterado para rosa */
         }
 
         .legend-meaning {
@@ -232,6 +232,7 @@
                 <div class="input-group">
                     <label for="nameInput">Digite seu nome ou palavra:</label>
                     <input type="text" id="nameInput" placeholder="Ex: Maria Silva" oninput="calculateChaldean()">
+                    <p style="font-size: 0.9em; color: #ff66b2; text-align: center;">(não use acentos)</p> <!-- Texto adicionado -->
                 </div>
                 
                 <div id="result" class="result" style="display: none;">
