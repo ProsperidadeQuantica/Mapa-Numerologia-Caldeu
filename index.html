@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Metatags para redes sociais -->
-    <meta property="og:image" content="https://github.com/ProsperidadeQuantica/Mapa-Numerologia-Caldeu/blob/main/PROSPERIDADE%20QU%C3%82NTICA%20LOGO.png?raw=true"> <!-- Logo para redes sociais -->
+    <meta property="og:image" content="https://github.com/ProsperidadeQuantica/Mapa-Numerologia-Caldeu/blob/main/PROSPERIDADE%20QU%C3%82NTICA%20LOGO.png?raw=true">
     <meta property="og:title" content="Mapa Caldeu de Numerologia Completo">
     <meta property="og:description" content="Descubra seu mapa numerológico completo com base na numerologia caldeia.">
-    <meta property="og:url" content="URL_DO_SEU_SITE_AQUI"> <!-- Atualizar URL quando implantado -->
+    <meta property="og:url" content="URL_DO_SEU_SITE_AQUI">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="URL_DA_IMAGEM_LOGO_AQUI"> <!-- Atualizar URL da imagem -->
+    <meta name="twitter:image" content="URL_DA_IMAGEM_LOGO_AQUI">
 
     <title>Mapa Caldeu de Numerologia Completo</title>
     <style>
@@ -32,7 +31,7 @@
         }
 
         .container {
-            max-width: 900px; /* Ajustado para melhor leitura */
+            max-width: 900px;
             margin: 20px auto;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -124,25 +123,24 @@
         }
         
         input[type="date"] {
-            appearance: none; /* Remove default appearance */
+            appearance: none;
             -webkit-appearance: none;
             position: relative;
-            color-scheme: dark; /* Helps with calendar picker style */
+            color-scheme: dark;
         }
         
-        /* Style the date input placeholder text */
         input[type="date"]::before {
             content: attr(placeholder);
             position: absolute;
-            color: #aaa; /* Placeholder color */
+            color: #aaa;
             left: 12px;
             top: 12px;
-            width: calc(100% - 40px); /* Adjust width to not overlap picker icon */
+            width: calc(100% - 40px);
         }
         
         input[type="date"]:focus::before, 
         input[type="date"]:valid::before {
-             display: none; /* Hide placeholder on focus or when valid */
+             display: none;
         }
 
         .calculate-button {
@@ -310,6 +308,78 @@
             opacity: 0.7;
         }
 
+        /* Estilos para Números da Sorte */
+        .lucky-numbers-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+            justify-content: center;
+        }
+
+        .lucky-number-item {
+            background: linear-gradient(45deg, #00d4aa, #00b894);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 12px 16px;
+            border-radius: 50%;
+            min-width: 50px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .lucky-number-item:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.5);
+        }
+
+        .incompatible-number-item {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 12px 16px;
+            border-radius: 50%;
+            min-width: 50px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .incompatible-number-item:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+        }
+
+        .neutral-number-item {
+            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
+            color: white;
+            font-weight: bold;
+            font-size: 1.2em;
+            padding: 12px 16px;
+            border-radius: 50%;
+            min-width: 50px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .neutral-number-item:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(149, 165, 166, 0.5);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
@@ -344,6 +414,12 @@
             }
             .energy-number {
                  font-size: 1.2em;
+            }
+            .lucky-number-item, .incompatible-number-item, .neutral-number-item {
+                min-width: 40px;
+                min-height: 40px;
+                font-size: 1em;
+                padding: 8px 12px;
             }
         }
 
@@ -381,6 +457,14 @@
             <!-- Número de Destino (Data de Nascimento) -->
             <div id="destinyResult" class="result-block" style="display: none;"></div>
 
+            <!-- Números da Sorte e Compatibilidade -->
+            <div id="luckyNumbersSection" style="display: none;">
+                <h3>🍀 Seus Números da Sorte e Compatibilidade</h3>
+                <div id="luckyNumbersResult" class="result-block"></div>
+                <div id="incompatibleNumbersResult" class="result-block"></div>
+                <div id="neutralNumbersResult" class="result-block"></div>
+            </div>
+
             <!-- Números do Nome (Expressão, Alma, Personalidade) -->
             <div id="nameResults" style="display: none;">
                 <h3>Numerologia do Nome: <span id="nameUsed"></span></h3>
@@ -403,16 +487,12 @@
         <div class="info-section">
             <h2>📜 Sobre a Numerologia Caldeia</h2>
             <div id="educationalContent">
-                <!-- Conteúdo educacional será adicionado aqui -->
                 <p>A Numerologia Caldeia é um sistema antigo que associa letras a números com base em suas vibrações sonoras. Acredita-se que ela revela insights profundos sobre a personalidade, o propósito de vida e os desafios de um indivíduo.</p>
                 <h3>Tabela de Correspondências Caldeia</h3>
                  <div class="chaldean-table-container">
                      <div class="chaldean-table" id="chaldeanTable"></div>
                  </div>
                  <p style="font-size: 0.9em; margin-top: 10px;">Nota: O número 9 é considerado sagrado e não é atribuído a letras neste sistema, mas pode aparecer como resultado final de um cálculo.</p>
-                 
-                 <!-- Mais conteúdo será adicionado aqui -->
-                 <div id="moreInfoPlaceholder"></div>
             </div>
         </div>
 
@@ -433,7 +513,25 @@
             'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
         };
 
-        // Interpretações (Expandir significativamente depois)
+        // Tabelas baseadas nas páginas do PDF Carlos Rosa
+        // Números que se Harmonizam (baseado no DIA de nascimento) - Página 219
+        const harmonizingNumbers = {
+            1: [1,3,4,5,6,7,8,9], 2: [1,2,3,6,7,9], 3: [1,2,3,5,6,7,8,9], 4: [1,4,6,7,8], 5: [1,3,5,6,9],
+            6: [1,2,3,4,6,9], 7: [1,2,3,4,7,8,9], 8: [1,4,7,8], 9: [1,2,3,5,6,7,9], 10: [1,3,4,5,6,7,8,9],
+            11: [1,2,3,6,7,9], 12: [1,2,3,5,6,7,8,9], 13: [1,4,6,7,8], 14: [1,3,5,6,9], 15: [1,2,3,4,6,9],
+            16: [1,2,3,4,7,8,9], 17: [1,4,7,8], 18: [1,2,3,5,6,7,9], 19: [1,3,4,5,6,7,8,9], 20: [1,2,3,6,7,9],
+            21: [1,2,3,5,6,7,8,9], 22: [1,4,6,7,8], 23: [1,3,5,6,9], 24: [1,2,3,4,6,9], 25: [1,2,3,4,7,8,9],
+            26: [1,4,7,8], 27: [1,2,3,5,6,7,9], 28: [1,3,4,5,6,7,8,9], 29: [1,2,3,6,7,9], 30: [1,2,3,5,6,7,8,9],
+            31: [1,4,6,7,8]
+        };
+
+        // Números Incompatíveis (baseado no MÊS de nascimento) - Página 220
+        const incompatibleNumbers = {
+            1: [1,2,4], 2: [1,3,5], 3: [2,4,8], 4: [2,3,5], 5: [2,4,6], 6: [3,5,7],
+            7: [4,6,8], 8: [3,7], 9: [4,8], 10: [1,3,5], 11: [2,4,8], 12: [2,3,5]
+        };
+
+        // Interpretações
         const interpretations = {
             destiny: {
                 1: "Seu caminho é de liderança, independência e inovação. Você está aqui para ser pioneiro e confiar em sua própria força.",
@@ -473,7 +571,6 @@
                 16: "Torre Fulminada: Avisos de perigo, acidentes ou planos frustrados. Necessidade de cautela e planejamento.",
                 19: "O Príncipe do Céu: Número altamente favorável, promete sucesso, felicidade e realização.",
                 22: "O Construtor Mestre: Potencial para grandes realizações que beneficiam muitos, mas exige esforço e responsabilidade.",
-                // Adicionar mais interpretações compostas conforme necessário
             },
             soul: {
                 1: "Sua alma anseia por independência, liderança e ser o número um.",
@@ -506,6 +603,15 @@
             energy: {
                  general: "A análise energética mostra a distribuição das vibrações numéricas (1-9) em seu nome completo de nascimento, usando o sistema Pitagórico. Isso revela seus pontos fortes e fracos energéticos inerentes.",
                  lines: "As linhas de energia (a serem implementadas) conectarão esses números para mostrar como diferentes aspectos (físico, mental, espiritual) interagem em sua vida."
+            },
+            luckyNumbers: {
+                description: "Com base no dia do seu nascimento, estes são os números que se harmonizam com sua energia pessoal. Use-os em decisões importantes, números de telefone, endereços, datas especiais ou sempre que precisar de apoio numérico."
+            },
+            incompatibleNumbers: {
+                description: "Baseado no mês do seu nascimento, estes números podem criar discórdia ou obstáculos em sua vida. Evite usá-los quando possível em situações importantes. Note que o número 9 nunca é incompatível, sendo sempre harmonioso."
+            },
+            neutralNumbers: {
+                description: "Estes números não têm influência específica - nem positiva nem negativa - para você. Podem ser usados normalmente, mas não trazem benefícios especiais nem prejudicam."
             }
         };
 
@@ -531,7 +637,7 @@
                 steps += ` → ${digits.join(' + ')} = ${sum}`;
                 currentNum = sum;
                 if (masterNumbers.includes(currentNum)) {
-                    break; // Para se encontrar um número mestre durante a redução
+                    break;
                 }
             }
             return trackSteps ? { finalNumber: currentNum, calculationSteps: steps } : currentNum;
@@ -551,13 +657,12 @@
                 const finalResult = reduceNumber(compoundNumber, true);
 
                 let calculationSteps = 
-                    `Dia (${day}): ${reducedDayResult.calculationSteps.substring(reducedDayResult.calculationSteps.indexOf('=') + 1).trim()}<br>
-                     Mês (${month}): ${reducedMonthResult.calculationSteps.substring(reducedMonthResult.calculationSteps.indexOf('=') + 1).trim()}<br>
-                     Ano (${year}): ${reducedYearResult.calculationSteps.substring(reducedYearResult.calculationSteps.indexOf('=') + 1).trim()}<br>
+                    `Dia (${day}): ${reducedDayResult.calculationSteps.substring(reducedDayResult.calculationSteps.indexOf(' ') + 1 || 0).trim() || day}<br>
+                     Mês (${month}): ${reducedMonthResult.calculationSteps.substring(reducedMonthResult.calculationSteps.indexOf(' ') + 1 || 0).trim() || month}<br>
+                     Ano (${year}): ${reducedYearResult.calculationSteps.substring(reducedYearResult.calculationSteps.indexOf(' ') + 1 || 0).trim() || year}<br>
                      Soma Reduzida: ${reducedDayResult.finalNumber} + ${reducedMonthResult.finalNumber} + ${reducedYearResult.finalNumber} = ${compoundNumber}`;
                 
                 if (compoundNumber !== finalResult.finalNumber && ![11, 22, 33].includes(compoundNumber)) {
-                     // Mostra a redução final apenas se o composto não for mestre e for diferente do final
                      let finalReductionStep = finalResult.calculationSteps.substring(finalResult.calculationSteps.indexOf('→'));
                      calculationSteps += `<br>Redução Final: ${compoundNumber} ${finalReductionStep}`;
                 }
@@ -574,7 +679,7 @@
             }
         }
 
-        function calculateNameNumber(name, valueMap, filterType = 'all') { // filterType: 'all', 'vowels', 'consonants'
+        function calculateNameNumber(name, valueMap, filterType = 'all') {
             if (!name) return null;
             let total = 0;
             let calculation = [];
@@ -596,7 +701,7 @@
                 }
             }
 
-            if (calculation.length === 0) { // Retorna null se nenhuma letra aplicável for encontrada
+            if (calculation.length === 0) {
                  return null;
             }
 
@@ -643,9 +748,8 @@
                  }
              }
              
-             if (totalLetters === 0) return null; // Retorna null se nenhuma letra válida foi encontrada
+             if (totalLetters === 0) return null;
 
-             // Lógica futura para análise das linhas pode vir aqui
              let lineAnalysisText = interpretations.energy.lines || "(Análise das linhas será implementada)";
 
              return {
@@ -655,15 +759,48 @@
              };
         }
 
+        // NOVA FUNÇÃO: Calcular Números da Sorte e Compatibilidade
+        function calculateLuckyNumbers(dob) {
+            if (!dob) return null;
+            
+            try {
+                const [year, month, day] = dob.split('-').map(Number);
+                if (!year || !month || !day) throw new Error("Data inválida.");
+
+                // Números que se harmonizam (baseado no DIA)
+                const harmonizing = harmonizingNumbers[day] || [];
+                
+                // Números incompatíveis (baseado no MÊS)
+                const incompatible = incompatibleNumbers[month] || [];
+                
+                // Números neutros (os que não são nem harmonizantes nem incompatíveis)
+                const allNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+                const neutral = allNumbers.filter(num => 
+                    !harmonizing.includes(num) && !incompatible.includes(num)
+                );
+
+                return {
+                    day: day,
+                    month: month,
+                    luckyNumbers: harmonizing,
+                    incompatibleNumbers: incompatible,
+                    neutralNumbers: neutral
+                };
+            } catch (error) {
+                console.error("Erro ao calcular números da sorte:", error);
+                return null;
+            }
+        }
+
         // --- Funções de Exibição --- 
         
         function displayResult(elementId, title, numberData, interpretationData) {
             const container = document.getElementById(elementId);
-            if (!container) return; // Sai se o container não existe
+            if (!container) return;
             
-            if (!numberData) { // Esconde se não há dados ou cálculo resultou em null
+            if (!numberData) {
                 container.style.display = 'none';
-                container.innerHTML = ''; // Limpa conteúdo anterior
+                container.innerHTML = '';
                 return;
             }
             
@@ -682,32 +819,29 @@
                     <p>${finalInterpretationText}</p>
                 </div>
             `;
-            container.style.display = 'block'; // Garante que está visível
+            container.style.display = 'block';
         }
         
          function displayEnergyAnalysis(elementId, analysisData) {
             const container = document.getElementById(elementId);
              if (!container) return;
              
-             if (!analysisData || !analysisData.diagramData || Object.values(analysisData.diagramData).every(count => count === 0)) { // Esconde se não há dados
+             if (!analysisData || !analysisData.diagramData || Object.values(analysisData.diagramData).every(count => count === 0)) {
                  container.style.display = 'none';
                  container.innerHTML = '';
                  return;
              }
             
-            // Monta a grade do diagrama
             let gridHtml = '<div class="energy-grid">';
-            // Ordem da grade: 1, 2, 3 / 4, 5, 6 / 7, 8, 9
             const gridOrder = [1, 2, 3, 4, 5, 6, 7, 8, 9]; 
             for (let num of gridOrder) {
                 const count = analysisData.diagramData[num] || 0;
                 let circlesHtml = '';
-                // Adiciona círculos - limita a um máximo razoável para não quebrar o layout
                 const maxCircles = 5; 
                 for(let i = 0; i < Math.min(count, maxCircles); i++) {
                     circlesHtml += '<span></span>';
                 }
-                if (count > maxCircles) circlesHtml += '...'; // Indica que há mais
+                if (count > maxCircles) circlesHtml += '...';
                 
                 gridHtml += `
                     <div class="energy-cell">
@@ -733,25 +867,82 @@
                      <p>${analysisData.lineAnalysis || 'Análise das linhas será implementada.'}</p>
                  </div>
             `;
-             container.style.display = 'block'; // Garante que o container está visível
+             container.style.display = 'block';
         }
 
-        // --- Função Principal --- 
+        // NOVA FUNÇÃO: Exibir Números da Sorte e Compatibilidade
+        function displayLuckyNumbers(luckyData) {
+            const luckyContainer = document.getElementById('luckyNumbersResult');
+            const incompatibleContainer = document.getElementById('incompatibleNumbersResult');
+            const neutralContainer = document.getElementById('neutralNumbersResult');
+            const section = document.getElementById('luckyNumbersSection');
 
+            if (!luckyData) {
+                section.style.display = 'none';
+                return;
+            }
+
+            // Números da Sorte (Harmonizantes)
+            let luckyHtml = '';
+            luckyData.luckyNumbers.forEach(num => {
+                luckyHtml += `<div class="lucky-number-item">${num}</div>`;
+            });
+
+            luckyContainer.innerHTML = `
+                <h4>🍀 Números da Sorte (Dia ${luckyData.day})</h4>
+                <div class="lucky-numbers-grid">${luckyHtml}</div>
+                <div class="interpretation">
+                    <p>${interpretations.luckyNumbers.description}</p>
+                </div>
+            `;
+
+            // Números Incompatíveis
+            let incompatibleHtml = '';
+            luckyData.incompatibleNumbers.forEach(num => {
+                incompatibleHtml += `<div class="incompatible-number-item">${num}</div>`;
+            });
+
+            incompatibleContainer.innerHTML = `
+                <h4>❌ Números Incompatíveis (Mês ${luckyData.month})</h4>
+                <div class="lucky-numbers-grid">${incompatibleHtml}</div>
+                <div class="interpretation">
+                    <p>${interpretations.incompatibleNumbers.description}</p>
+                </div>
+            `;
+
+            // Números Neutros
+            let neutralHtml = '';
+            luckyData.neutralNumbers.forEach(num => {
+                neutralHtml += `<div class="neutral-number-item">${num}</div>`;
+            });
+
+            if (luckyData.neutralNumbers.length > 0) {
+                neutralContainer.innerHTML = `
+                    <h4>⚪ Números Neutros</h4>
+                    <div class="lucky-numbers-grid">${neutralHtml}</div>
+                    <div class="interpretation">
+                        <p>${interpretations.neutralNumbers.description}</p>
+                    </div>
+                `;
+                neutralContainer.style.display = 'block';
+            } else {
+                neutralContainer.style.display = 'none';
+            }
+
+            section.style.display = 'block';
+        }
+
+        // --- Função Principal ---
         function calculateAll() {
             const nameInput = document.getElementById('nameInput').value;
-            const dobInput = document.getElementById('dobInput').value; // Format YYYY-MM-DD
+            const dobInput = document.getElementById('dobInput').value;
             const fullNameInput = document.getElementById('fullNameInput').value;
             const resultsSection = document.getElementById('resultsSection');
             const nameResultsSection = document.getElementById('nameResults');
             const energySection = document.getElementById('energyAnalysisSection');
             const destinyResultContainer = document.getElementById('destinyResult');
-            const expressionResultContainer = document.getElementById('expressionResult');
-            const soulResultContainer = document.getElementById('soulUrgeResult');
-            const personalityResultContainer = document.getElementById('personalityResult');
-            const energyAnalysisResultContainer = document.getElementById('energyAnalysisResult');
+            const luckySection = document.getElementById('luckyNumbersSection');
 
-            // Validação básica
             if (!nameInput.trim() && !dobInput && !fullNameInput.trim()) {
                 alert("Por favor, preencha pelo menos um campo para calcular.");
                 resultsSection.style.display = 'none';
@@ -759,53 +950,52 @@
             }
 
             resultsSection.style.display = 'block';
-            // Esconde todas as seções de resultado inicialmente para limpar cálculos anteriores
+            
+            // Esconder seções inicialmente
             destinyResultContainer.style.display = 'none'; 
             nameResultsSection.style.display = 'none'; 
-            expressionResultContainer.style.display = 'none';
-            soulResultContainer.style.display = 'none';
-            personalityResultContainer.style.display = 'none';
             energySection.style.display = 'none';
-            energyAnalysisResultContainer.style.display = 'none';
+            luckySection.style.display = 'none';
 
-            // Calcular e exibir Número do Destino (se houver data)
+            // Calcular e exibir Número do Destino
             if (dobInput) {
                 const destinyData = calculateDestinyNumber(dobInput);
-                 if (destinyData) {
+                if (destinyData) {
                     displayResult('destinyResult', '🌟 Número do Destino (Caminho de Vida)', destinyData, interpretations.destiny);
-                 } else {
-                     destinyResultContainer.innerHTML = '<p style="color: #ff8cc6; text-align: center;">Data de nascimento inválida. Use o formato AAAA-MM-DD.</p>';
-                     destinyResultContainer.style.display = 'block';
-                 }
-            } 
+                } else {
+                    destinyResultContainer.innerHTML = '<p style="color: #ff8cc6; text-align: center;">Data de nascimento inválida. Use o formato AAAA-MM-DD.</p>';
+                    destinyResultContainer.style.display = 'block';
+                }
 
-            // Calcular e exibir Números do Nome (se houver nome comum)
+                // NOVA FUNCIONALIDADE: Calcular e exibir Números da Sorte
+                const luckyData = calculateLuckyNumbers(dobInput);
+                displayLuckyNumbers(luckyData);
+            }
+
+            // Calcular números do nome
             if (nameInput.trim()) {
                 const normalizedName = normalizeString(nameInput);
                 document.getElementById('nameUsed').textContent = `"${nameInput}"`;
-                nameResultsSection.style.display = 'block'; // Mostra a seção do nome
+                nameResultsSection.style.display = 'block';
                 
                 const expressionData = calculateExpressionNumber(normalizedName);
                 const soulData = calculateSoulUrgeNumber(normalizedName);
                 const personalityData = calculatePersonalityNumber(normalizedName);
                 
-                // Chama displayResult para cada número do nome
-                displayResult('expressionResult', ' EXPRESSÃO (Como você age)', expressionData, interpretations.expression);
+                displayResult('expressionResult', '🎯 EXPRESSÃO (Como você age)', expressionData, interpretations.expression);
                 displayResult('soulUrgeResult', '💖 Impulso da Alma (O que te motiva)', soulData, interpretations.soul);
                 displayResult('personalityResult', '🎭 Eu Exterior (Como te veem)', personalityData, interpretations.personality);
             }
 
-            // Calcular e exibir Análise Energética (se houver nome completo legal)
+            // Calcular análise energética
             if (fullNameInput.trim()) {
                 const normalizedFullName = normalizeString(fullNameInput);
-                 document.getElementById('fullNameUsed').textContent = `"${fullNameInput}"`;
+                document.getElementById('fullNameUsed').textContent = `"${fullNameInput}"`;
                 const energyData = calculateEnergyAnalysis(normalizedFullName);
-                // A função displayEnergyAnalysis já controla a visibilidade do seu container interno
                 displayEnergyAnalysis('energyAnalysisResult', energyData); 
-                energySection.style.display = 'block'; // Mostra a seção de análise energética
+                energySection.style.display = 'block';
             }
             
-            // Scroll suave para a seção de resultados
             resultsSection.scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -813,11 +1003,11 @@
         function createChaldeanTable() {
             const table = document.getElementById('chaldeanTable');
             if (!table) return;
-            table.innerHTML = ''; // Limpa tabela antes de recriar
+            table.innerHTML = '';
             const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             
             for (let letter of alphabet) {
-                if (chaldeanValues[letter]) { // Apenas letras com valor caldeu
+                if (chaldeanValues[letter]) {
                     const letterBox = document.createElement('div');
                     letterBox.className = 'letter-box';
                     letterBox.innerHTML = `
