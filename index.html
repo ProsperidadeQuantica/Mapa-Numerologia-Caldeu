@@ -1,83 +1,108 @@
-// Função para calcular o número de destino com base na data de nascimento
-function calcularNumeroDestino(dataNascimento) {
-    let data = new Date(dataNascimento);
-    let dia = data.getDate();
-    let mes = data.getMonth() + 1; // Meses começam de 0
-    let ano = data.getFullYear();
-
-    let soma = dia + mes + ano;
-
-    while (soma > 9 && soma !== 11 && soma !== 22) {
-        soma = soma.toString().split('').map(Number).reduce((a, b) => a + b);
-    }
-    return soma;
-}
-
-// Função para calcular o número do nome com base na numerologia caldeu
-function calcularNumeroNome(nome) {
-    const valores = {
-        'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
-        'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
-        'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
-    };
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numerologia - Cálculo de Números da Sorte</title>
+</head>
+<body>
+    <h1>Calcule seus Números da Sorte</h1>
     
-    nome = nome.toUpperCase().replace(/[^A-Z]/g, ''); // Limpeza do nome
-    let soma = 0;
-    for (let i = 0; i < nome.length; i++) {
-        soma += valores[nome[i]];
-    }
+    <!-- Formulário de entrada -->
+    <form id="formularioNumerologia">
+        <label for="dataNascimento">Data de Nascimento:</label>
+        <input type="date" id="dataNascimento" required>
+        
+        <label for="nomeCompleto">Nome Completo:</label>
+        <input type="text" id="nomeCompleto" required>
+        
+        <button type="button" onclick="mostrarNumerosDaSorte()">Calcular Números da Sorte</button>
+    </form>
 
-    while (soma > 9 && soma !== 11 && soma !== 22) {
-        soma = soma.toString().split('').map(Number).reduce((a, b) => a + b);
-    }
-    return soma;
-}
+    <div id="resultados"></div>
 
-// Função para calcular números da sorte e fornecer dicas
-function calcularNumerosDaSorte(dataNascimento, nomeCompleto) {
-    const numeroDestino = calcularNumeroDestino(dataNascimento);
-    const numeroNome = calcularNumeroNome(nomeCompleto);
+    <script>
+        // Função para calcular o número de destino com base na data de nascimento
+        function calcularNumeroDestino(dataNascimento) {
+            let data = new Date(dataNascimento);
+            let dia = data.getDate();
+            let mes = data.getMonth() + 1; // Meses começam de 0
+            let ano = data.getFullYear();
 
-    const numerosFavoraveis = {
-        1: { descricao: "Número de liderança e ação. Dias favoráveis: 1, 10, 19, 28.", dica: "Aproveite os dias de ação para dar início a novos projetos e conquistar objetivos." },
-        2: { descricao: "Número de equilíbrio e harmonia. Dias favoráveis: 2, 11, 20, 29.", dica: "Use os dias de equilíbrio para resolver pendências emocionais e criar harmonia nos relacionamentos." },
-        3: { descricao: "Número criativo e expressivo. Dias favoráveis: 3, 12, 21, 30.", dica: "Aproveite os dias de expressão para compartilhar suas ideias e trabalhar sua criatividade." },
-        4: { descricao: "Número de estabilidade e organização. Dias favoráveis: 4, 13, 22.", dica: "Use os dias de estabilidade para organizar sua vida e trabalhar em sua base sólida." },
-        5: { descricao: "Número de aventura e liberdade. Dias favoráveis: 5, 14, 23.", dica: "Aproveite os dias de aventura para buscar novas experiências e ampliar seus horizontes." },
-        6: { descricao: "Número de família e responsabilidade. Dias favoráveis: 6, 15, 24.", dica: "Aproveite os dias de família para fortalecer os laços familiares e cuidar do seu lar." },
-        7: { descricao: "Número espiritual e introspectivo. Dias favoráveis: 7, 16, 25.", dica: "Use os dias espirituais para meditar, refletir e buscar sua conexão interior." },
-        8: { descricao: "Número de poder e realização. Dias favoráveis: 8, 17, 26.", dica: "Aproveite os dias de poder para focar em sua carreira e alcançar grandes realizações." },
-        9: { descricao: "Número de completude e altruísmo. Dias favoráveis: 9, 18, 27.", dica: "Use os dias de altruísmo para ajudar os outros e promover mudanças positivas." },
-        11: { descricao: "Número de mestre, intuição e visão. Dias favoráveis: 11, 22.", dica: "Use os dias de mestre para agir com sabedoria e intuição, buscando grandes revelações." },
-        22: { descricao: "Número mestre, de grandes realizações. Dias favoráveis: 22.", dica: "Use os dias de mestre para focar em grandes projetos e realizar metas ambiciosas." }
-    };
+            let soma = dia + mes + ano;
 
-    // Criando lista de números favoráveis
-    let numerosDaSorte = [numeroDestino, numeroNome];
-    numerosDaSorte = [...new Set(numerosDaSorte)];
+            while (soma > 9 && soma !== 11 && soma !== 22) {
+                soma = soma.toString().split('').map(Number).reduce((a, b) => a + b);
+            }
+            return soma;
+        }
 
-    // Obtendo as dicas para os números favoráveis
-    let dicasFavoraveis = numerosDaSorte.map(numero => numerosFavoraveis[numero]);
+        // Função para calcular o número do nome com base na numerologia caldeu
+        function calcularNumeroNome(nome) {
+            const valores = {
+                'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
+                'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
+                'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
+            };
 
-    return dicasFavoraveis;
-}
+            nome = nome.toUpperCase().replace(/[^A-Z]/g, ''); // Limpeza do nome
+            let soma = 0;
+            for (let i = 0; i < nome.length; i++) {
+                soma += valores[nome[i]];
+            }
 
-// Exemplo de uso (você pode integrar essa função ao seu formulário)
-function mostrarNumerosDaSorte() {
-    let dataNascimento = document.getElementById("dataNascimento").value;
-    let nomeCompleto = document.getElementById("nomeCompleto").value;
+            while (soma > 9 && soma !== 11 && soma !== 22) {
+                soma = soma.toString().split('').map(Number).reduce((a, b) => a + b);
+            }
+            return soma;
+        }
 
-    if (dataNascimento && nomeCompleto) {
-        const resultados = calcularNumerosDaSorte(dataNascimento, nomeCompleto);
-        let resultadoDiv = document.getElementById("resultados");
+        // Função para calcular os números da sorte e suas dicas
+        function calcularNumerosDaSorte(dataNascimento, nomeCompleto) {
+            const numeroDestino = calcularNumeroDestino(dataNascimento);
+            const numeroNome = calcularNumeroNome(nomeCompleto);
 
-        resultadoDiv.innerHTML = '';
-        resultados.forEach(resultado => {
-            let descricao = document.createElement("p");
-            descricao.textContent = `${resultado.descricao} - Dica: ${resultado.dica}`;
-            resultadoDiv.appendChild(descricao);
-        });
-    }
-}
+            const numerosFavoraveis = {
+                1: { descricao: "Número de liderança e ação. Dias favoráveis: 1, 10, 19, 28.", dica: "Aproveite os dias de ação para dar início a novos projetos e conquistar objetivos." },
+                2: { descricao: "Número de equilíbrio e harmonia. Dias favoráveis: 2, 11, 20, 29.", dica: "Use os dias de equilíbrio para resolver pendências emocionais e criar harmonia nos relacionamentos." },
+                3: { descricao: "Número criativo e expressivo. Dias favoráveis: 3, 12, 21, 30.", dica: "Aproveite os dias de expressão para compartilhar suas ideias e trabalhar sua criatividade." },
+                4: { descricao: "Número de estabilidade e organização. Dias favoráveis: 4, 13, 22.", dica: "Use os dias de estabilidade para organizar sua vida e trabalhar em sua base sólida." },
+                5: { descricao: "Número de aventura e liberdade. Dias favoráveis: 5, 14, 23.", dica: "Aproveite os dias de aventura para buscar novas experiências e ampliar seus horizontes." },
+                6: { descricao: "Número de família e responsabilidade. Dias favoráveis: 6, 15, 24.", dica: "Aproveite os dias de família para fortalecer os laços familiares e cuidar do seu lar." },
+                7: { descricao: "Número espiritual e introspectivo. Dias favoráveis: 7, 16, 25.", dica: "Use os dias espirituais para meditar, refletir e buscar sua conexão interior." },
+                8: { descricao: "Número de poder e realização. Dias favoráveis: 8, 17, 26.", dica: "Aproveite os dias de poder para focar em sua carreira e alcançar grandes realizações." },
+                9: { descricao: "Número de completude e altruísmo. Dias favoráveis: 9, 18, 27.", dica: "Use os dias de altruísmo para ajudar os outros e promover mudanças positivas." },
+                11: { descricao: "Número de mestre, intuição e visão. Dias favoráveis: 11, 22.", dica: "Use os dias de mestre para agir com sabedoria e intuição, buscando grandes revelações." },
+                22: { descricao: "Número mestre, de grandes realizações. Dias favoráveis: 22.", dica: "Use os dias de mestre para focar em grandes projetos e realizar metas ambiciosas." }
+            };
 
-// HTML (assumindo que você tenha um formulário com id "dataNascimento" e "nomeCompleto")
+            // Criando lista de números favoráveis
+            let numerosDaSorte = [numeroDestino, numeroNome];
+            numerosDaSorte = [...new Set(numerosDaSorte)];
+
+            // Obtendo as dicas para os números favoráveis
+            let dicasFavoraveis = numerosDaSorte.map(numero => numerosFavoraveis[numero]);
+
+            return dicasFavoraveis;
+        }
+
+        // Função para exibir os resultados no site
+        function mostrarNumerosDaSorte() {
+            let dataNascimento = document.getElementById("dataNascimento").value;
+            let nomeCompleto = document.getElementById("nomeCompleto").value;
+
+            if (dataNascimento && nomeCompleto) {
+                const resultados = calcularNumerosDaSorte(dataNascimento, nomeCompleto);
+                let resultadoDiv = document.getElementById("resultados");
+
+                resultadoDiv.innerHTML = '';
+                resultados.forEach(resultado => {
+                    let descricao = document.createElement("p");
+                    descricao.textContent = `${resultado.descricao} - Dica: ${resultado.dica}`;
+                    resultadoDiv.appendChild(descricao);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
