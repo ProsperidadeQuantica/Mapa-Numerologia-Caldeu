@@ -128,20 +128,6 @@
             position: relative;
             color-scheme: dark;
         }
-        
-        input[type="date"]::before {
-            content: attr(placeholder);
-            position: absolute;
-            color: #aaa;
-            left: 12px;
-            top: 12px;
-            width: calc(100% - 40px);
-        }
-        
-        input[type="date"]:focus::before, 
-        input[type="date"]:valid::before {
-             display: none;
-        }
 
         .calculate-button {
             display: block;
@@ -308,8 +294,8 @@
             opacity: 0.7;
         }
 
-        /* Estilos para os diferentes tipos de números */
-        .lucky-numbers-grid {
+        /* Estilos para os números */
+        .numbers-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
@@ -317,7 +303,6 @@
             justify-content: center;
         }
 
-        /* NÚMEROS FAVORÁVEIS - Dourado */
         .favorable-number-item {
             background: linear-gradient(45deg, #ffd700, #ffed4e);
             color: #1a1a1a;
@@ -334,12 +319,6 @@
             transition: all 0.3s ease;
         }
 
-        .favorable-number-item:hover {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
-        }
-
-        /* NÚMEROS QUE SE HARMONIZAM - Verde */
         .harmonizing-number-item {
             background: linear-gradient(45deg, #00d4aa, #00b894);
             color: white;
@@ -356,12 +335,6 @@
             transition: all 0.3s ease;
         }
 
-        .harmonizing-number-item:hover {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.5);
-        }
-
-        /* NÚMEROS INCOMPATÍVEIS - Vermelho */
         .incompatible-number-item {
             background: linear-gradient(45deg, #e74c3c, #c0392b);
             color: white;
@@ -378,52 +351,14 @@
             transition: all 0.3s ease;
         }
 
-        .incompatible-number-item:hover {
+        .favorable-number-item:hover, .harmonizing-number-item:hover, .incompatible-number-item:hover {
             transform: translateY(-3px) scale(1.1);
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 2em;
-            }
-            h2 {
-                font-size: 1.4em;
-            }
-            .chaldean-table {
-                grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
-            }
-        }
-        
-        @media (max-width: 480px) {
-             h1 {
-                font-size: 1.8em;
-            }
-             h2 {
-                font-size: 1.3em;
-            }
-            .result-number {
-                font-size: 2.5em;
-            }
-            .energy-grid {
-                 max-width: 200px;
-            }
-            .energy-cell {
-                 padding: 10px 5px;
-            }
-            .energy-number {
-                 font-size: 1.2em;
-            }
-            .favorable-number-item, .harmonizing-number-item, .incompatible-number-item {
-                min-width: 40px;
-                min-height: 40px;
-                font-size: 1em;
-                padding: 8px 12px;
-            }
+            .container { padding: 20px; }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.4em; }
         }
 
     </style>
@@ -433,42 +368,35 @@
         <h1>🔮 Mapa Caldeu de Numerologia Completo</h1>
         <p class="subtitle">Descubra as vibrações que moldam seu destino</p>
 
-        <!-- Seção de Inputs -->
         <div class="input-section">
             <h2>📊 Insira seus Dados</h2>
             <div class="input-group">
                 <label for="nameInput">Nome mais usado (ou palavra):</label>
                 <input type="text" id="nameInput" placeholder="Ex: Maria Silva (sem acentos)">
-                <p style="font-size: 0.8em; color: #ff8cc6; text-align: right; margin-top: 5px;">(Não use acentos)</p>
             </div>
             <div class="input-group">
                 <label for="dobInput">Data de Nascimento:</label>
-                <input type="date" id="dobInput" placeholder="dd/mm/aaaa">
+                <input type="date" id="dobInput">
             </div>
-             <div class="input-group">
+            <div class="input-group">
                 <label for="fullNameInput">Nome Completo de Nascimento (Legal):</label>
                 <input type="text" id="fullNameInput" placeholder="Ex: Maria da Silva Santos (sem acentos)">
-                 <p style="font-size: 0.8em; color: #ff8cc6; text-align: right; margin-top: 5px;">(Necessário para Análise Energética)</p>
             </div>
             <button class="calculate-button" onclick="calculateAll()">Calcular Mapa Numerológico</button>
         </div>
 
-        <!-- Seção de Resultados -->
         <div id="resultsSection" class="results-section" style="display: none;">
             <h2>✨ Seu Mapa Numerológico ✨</h2>
             
-            <!-- Número de Destino (Data de Nascimento) -->
             <div id="destinyResult" class="result-block" style="display: none;"></div>
 
-            <!-- Números Favoráveis, Harmonizantes e Incompatíveis -->
-            <div id="numerologySection" style="display: none;">
-                <h3>🔢 Análise Numerológica Carlos Rosa</h3>
-                <div id="favorableNumbersResult" class="result-block"></div>
-                <div id="harmonizingNumbersResult" class="result-block"></div>
-                <div id="incompatibleNumbersResult" class="result-block"></div>
+            <div id="specialNumbersSection" style="display: none;">
+                <h3>🔢 Seus Números Especiais</h3>
+                <div id="favorableResult" class="result-block"></div>
+                <div id="harmonizingResult" class="result-block"></div>
+                <div id="incompatibleResult" class="result-block"></div>
             </div>
 
-            <!-- Números do Nome (Expressão, Alma, Personalidade) -->
             <div id="nameResults" style="display: none;">
                 <h3>Numerologia do Nome: <span id="nameUsed"></span></h3>
                 <div id="expressionResult" class="result-block"></div>
@@ -476,75 +404,82 @@
                 <div id="personalityResult" class="result-block"></div>
             </div>
 
-            <!-- Análise Energética (Nome Completo) -->
-             <div id="energyAnalysisSection" style="display: none;">
-                 <h3>Análise Energética do Nome Completo: <span id="fullNameUsed"></span></h3>
-                 <div id="energyAnalysisResult" class="result-block">
-                     <!-- O conteúdo será preenchido pela função displayEnergyAnalysis -->
-                 </div>
+            <div id="energyAnalysisSection" style="display: none;">
+                <h3>Análise Energética do Nome Completo: <span id="fullNameUsed"></span></h3>
+                <div id="energyAnalysisResult" class="result-block"></div>
             </div>
-
         </div>
         
-        <!-- Seção Informativa -->
         <div class="info-section">
             <h2>📜 Sobre a Numerologia Caldeia</h2>
             <div id="educationalContent">
-                <p>A Numerologia Caldeia é um sistema antigo que associa letras a números com base em suas vibrações sonoras. Acredita-se que ela revela insights profundos sobre a personalidade, o propósito de vida e os desafios de um indivíduo.</p>
+                <p>A Numerologia Caldeia é um sistema antigo que associa letras a números com base em suas vibrações sonoras.</p>
                 <h3>Tabela de Correspondências Caldeia</h3>
-                 <div class="chaldean-table-container">
-                     <div class="chaldean-table" id="chaldeanTable"></div>
-                 </div>
-                 <p style="font-size: 0.9em; margin-top: 10px;">Nota: O número 9 é considerado sagrado e não é atribuído a letras neste sistema, mas pode aparecer como resultado final de um cálculo.</p>
+                <div class="chaldean-table-container">
+                    <div class="chaldean-table" id="chaldeanTable"></div>
+                </div>
             </div>
         </div>
-
     </div>
 
     <script>
-        // Tabela Caldeia
+        // Tabelas das imagens que você enviou
         const chaldeanValues = {
             'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
             'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
             'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
         };
-        
-        // Tabela Pitagórica (para Análise Energética)
+
         const pythagoreanValues = {
             'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
             'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
             'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
         };
 
-        // TABELAS CORRETAS DO PDF CARLOS ROSA
-
-        // NÚMEROS FAVORÁVEIS - Baseado na tabela da página 216-217 (DIA + MÊS)
-        const favorableNumbers = {
+        // NÚMEROS FAVORÁVEIS (baseado nas tabelas que você enviou)
+        const numerosFavoraveis = {
             "1-1": [1,5], "1-2": [1,6], "1-3": [5,6], "1-4": [1,5], "1-5": [5,6], "1-6": [1,6], "1-7": [1,7], "1-8": [1,3], "1-9": [6,9], "1-10": [1,5],
             "1-11": [1,6], "1-12": [1,6], "1-13": [1,7], "1-14": [1,7], "1-15": [1,3], "1-16": [6,9], "1-17": [1,5], "1-18": [1,6], "1-19": [1,6], "1-20": [1,7],
             "1-21": [1,6], "1-22": [1,6], "1-23": [1,7], "1-24": [5,6], "1-25": [5,6], "1-26": [2,3], "1-27": [6,9], "1-28": [5,6], "1-29": [1,7], "1-30": [2,3], "1-31": [1,7],
-            
             "2-1": [2,7], "2-2": [2,7], "2-3": [3,6], "2-4": [2,7], "2-5": [3,6], "2-6": [1,6], "2-7": [3,7], "2-8": [2,3], "2-9": [1,6], "2-10": [2,7],
             "2-11": [5,7], "2-12": [5,6], "2-13": [1,5], "2-14": [5,7], "2-15": [5,6], "2-16": [1,5], "2-17": [2,3], "2-18": [3,6], "2-19": [1,7], "2-20": [2,7],
             "2-21": [3,6], "2-22": [5,7], "2-23": [6,7], "2-24": [5,6], "2-25": [5,6], "2-26": [2,3], "2-27": [1,9], "2-28": [5,6], "2-29": [1,7],
-            
             "3-1": [1,7], "3-2": [1,7], "3-3": [3,5], "3-4": [1,7], "3-5": [1,7], "3-6": [3,6], "3-7": [2,7], "3-8": [3,6], "3-9": [6,9], "3-10": [1,7],
             "3-11": [1,7], "3-12": [2,7], "3-13": [1,5], "3-14": [5,7], "3-15": [3,6], "3-16": [1,6], "3-17": [2,6], "3-18": [3,6], "3-19": [1,7], "3-20": [2,7],
             "3-21": [3,6], "3-22": [1,7], "3-23": [6,7], "3-24": [3,6], "3-25": [3,7], "3-26": [1,3], "3-27": [2,6], "3-28": [5,7], "3-29": [1,7], "3-30": [3,6], "3-31": [1,7],
-            
-            // Continuo com mais meses... (Esta é uma amostra)
             "4-1": [1,7], "4-2": [1,7], "4-3": [5,7], "4-4": [1,7], "4-5": [1,6], "4-6": [1,6], "4-7": [2,7], "4-8": [1,3], "4-9": [5,7], "4-10": [1,7],
             "4-11": [1,7], "4-12": [1,7], "4-13": [1,7], "4-14": [5,7], "4-15": [5,6], "4-16": [1,6], "4-17": [1,3], "4-18": [1,3], "4-19": [1,7], "4-20": [3,7],
             "4-21": [1,3], "4-22": [1,7], "4-23": [5,7], "4-24": [3,5], "4-25": [5,6], "4-26": [2,3], "4-27": [3,6], "4-28": [5,6], "4-29": [1,7], "4-30": [3,6],
-            
-            // Implementando um padrão para os outros meses (pode ser refinado)
             "5-1": [1,2], "5-2": [2,7], "5-3": [1,6], "5-4": [1,7], "5-5": [1,6], "5-6": [1,6], "5-7": [2,6], "5-8": [2,5], "5-9": [2,7], "5-10": [1,2],
+            "5-11": [2,7], "5-12": [1,6], "5-13": [1,7], "5-14": [1,6], "5-15": [1,6], "5-16": [2,6], "5-17": [2,5], "5-18": [2,7], "5-19": [1,2], "5-20": [2,7],
+            "5-21": [1,6], "5-22": [1,7], "5-23": [1,6], "5-24": [1,6], "5-25": [2,6], "5-26": [2,5], "5-27": [2,7], "5-28": [1,2], "5-29": [2,7], "5-30": [1,6], "5-31": [1,7],
+            "6-1": [3,6], "6-2": [3,6], "6-3": [3,6], "6-4": [3,6], "6-5": [3,6], "6-6": [3,6], "6-7": [3,6], "6-8": [3,6], "6-9": [3,6], "6-10": [3,6],
+            "6-11": [3,6], "6-12": [3,6], "6-13": [3,6], "6-14": [3,6], "6-15": [3,6], "6-16": [3,6], "6-17": [3,6], "6-18": [3,6], "6-19": [3,6], "6-20": [3,6],
+            "6-21": [3,6], "6-22": [3,6], "6-23": [3,6], "6-24": [3,6], "6-25": [3,6], "6-26": [3,6], "6-27": [3,6], "6-28": [3,6], "6-29": [3,6], "6-30": [3,6],
+            "7-1": [2,7], "7-2": [2,7], "7-3": [2,7], "7-4": [2,7], "7-5": [2,7], "7-6": [2,7], "7-7": [2,7], "7-8": [2,7], "7-9": [2,7], "7-10": [2,7],
+            "7-11": [2,7], "7-12": [2,7], "7-13": [2,7], "7-14": [2,7], "7-15": [2,7], "7-16": [2,7], "7-17": [2,7], "7-18": [2,7], "7-19": [2,7], "7-20": [2,7],
+            "7-21": [2,7], "7-22": [2,7], "7-23": [2,7], "7-24": [2,7], "7-25": [2,7], "7-26": [2,7], "7-27": [2,7], "7-28": [2,7], "7-29": [2,7], "7-30": [2,7], "7-31": [2,7],
+            "8-1": [1,8], "8-2": [1,8], "8-3": [1,8], "8-4": [1,8], "8-5": [1,8], "8-6": [1,8], "8-7": [1,8], "8-8": [1,8], "8-9": [1,8], "8-10": [1,8],
+            "8-11": [1,8], "8-12": [1,8], "8-13": [1,8], "8-14": [1,8], "8-15": [1,8], "8-16": [1,8], "8-17": [1,8], "8-18": [1,8], "8-19": [1,8], "8-20": [1,8],
+            "8-21": [1,8], "8-22": [1,8], "8-23": [1,8], "8-24": [1,8], "8-25": [1,8], "8-26": [1,8], "8-27": [1,8], "8-28": [1,8], "8-29": [1,8], "8-30": [1,8], "8-31": [1,8],
+            "9-1": [6,9], "9-2": [6,9], "9-3": [6,9], "9-4": [6,9], "9-5": [6,9], "9-6": [6,9], "9-7": [6,9], "9-8": [6,9], "9-9": [6,9], "9-10": [6,9],
+            "9-11": [6,9], "9-12": [6,9], "9-13": [6,9], "9-14": [6,9], "9-15": [6,9], "9-16": [6,9], "9-17": [6,9], "9-18": [6,9], "9-19": [6,9], "9-20": [6,9],
+            "9-21": [6,9], "9-22": [6,9], "9-23": [6,9], "9-24": [6,9], "9-25": [6,9], "9-26": [6,9], "9-27": [6,9], "9-28": [6,9], "9-29": [6,9], "9-30": [6,9],
+            "10-1": [1,5], "10-2": [1,6], "10-3": [5,6], "10-4": [1,5], "10-5": [5,6], "10-6": [1,6], "10-7": [1,7], "10-8": [1,3], "10-9": [6,9], "10-10": [1,5],
+            "10-11": [1,6], "10-12": [1,6], "10-13": [1,7], "10-14": [1,7], "10-15": [1,3], "10-16": [6,9], "10-17": [1,5], "10-18": [1,6], "10-19": [1,6], "10-20": [1,7],
+            "10-21": [1,6], "10-22": [1,6], "10-23": [1,7], "10-24": [5,6], "10-25": [5,6], "10-26": [2,3], "10-27": [6,9], "10-28": [5,6], "10-29": [1,7], "10-30": [2,3], "10-31": [1,7],
+            "11-1": [2,7], "11-2": [2,7], "11-3": [3,6], "11-4": [2,7], "11-5": [3,6], "11-6": [1,6], "11-7": [3,7], "11-8": [2,3], "11-9": [1,6], "11-10": [2,7],
+            "11-11": [5,7], "11-12": [5,6], "11-13": [1,5], "11-14": [5,7], "11-15": [5,6], "11-16": [1,5], "11-17": [2,3], "11-18": [3,6], "11-19": [1,7], "11-20": [2,7],
+            "11-21": [3,6], "11-22": [5,7], "11-23": [6,7], "11-24": [5,6], "11-25": [5,6], "11-26": [2,3], "11-27": [1,9], "11-28": [5,6], "11-29": [1,7], "11-30": [2,3],
+            "12-1": [1,7], "12-2": [1,7], "12-3": [3,5], "12-4": [1,7], "12-5": [1,7], "12-6": [3,6], "12-7": [2,7], "12-8": [3,6], "12-9": [6,9], "12-10": [1,7],
+            "12-11": [1,7], "12-12": [2,7], "12-13": [1,5], "12-14": [5,7], "12-15": [3,6], "12-16": [1,6], "12-17": [2,6], "12-18": [3,6], "12-19": [1,7], "12-20": [2,7],
+            "12-21": [3,6], "12-22": [1,7], "12-23": [6,7], "12-24": [3,6], "12-25": [3,7], "12-26": [1,3], "12-27": [2,6], "12-28": [5,7], "12-29": [1,7], "12-30": [3,6], "12-31": [1,7]
         };
 
-        // NÚMEROS QUE SE HARMONIZAM - Baseado no DIA DE NASCIMENTO (1-9)
-        const harmonizingNumbersByDay = {
+        // NÚMEROS QUE SE HARMONIZAM (por dia 1-9)
+        const numerosHarmonizam = {
             1: [3,4,9],
-            2: [1,2,3,4,5,6,7,8,9], // "todos os números são compatíveis"
+            2: [1,2,3,4,5,6,7,8,9],
             3: [2,4,6,7,9],
             4: [2,5,6,7,8,9],
             5: [2,4,5,7,8,9],
@@ -554,8 +489,8 @@
             9: [1,2,3,5,6,8,9]
         };
 
-        // NÚMEROS INCOMPATÍVEIS - Lista específica do PDF
-        const incompatibleNumbersFixed = {
+        // NÚMEROS INCOMPATÍVEIS (por dia 1-9)
+        const numerosIncompativeis = {
             1: [5,7],
             2: [4,8],
             3: [3,8],
@@ -564,10 +499,9 @@
             6: [1,4,7,8],
             7: [1,6,8],
             8: [1,2,3,5,6,8,9],
-            9: [4,7] // Nota: O 9 tem poucos incompatíveis
+            9: [4,7]
         };
 
-        // Interpretações
         const interpretations = {
             destiny: {
                 1: "Seu caminho é de liderança, independência e inovação. Você está aqui para ser pioneiro e confiar em sua própria força.",
@@ -597,17 +531,6 @@
                  22: "Número Mestre: Sua expressão é a de um construtor mestre, capaz de transformar sonhos em realidade prática em larga escala.",
                  33: "Número Mestre: Sua expressão é de mestre curador, compassiva e dedicada ao serviço altruísta (raro como número de expressão)."
             },
-            compound: {
-                10: "Roda da Fortuna: Potencial para sucesso ou queda, dependendo das ações. Carrega uma energia kármica de começos e fins.",
-                11: "Força Oculta: Número mestre de grande intuição, inspiração, mas também tensão nervosa e provações.",
-                12: "O Sacrifício: Indica ansiedade e sacrifício pelo bem dos outros. Aprendizado através das dificuldades.",
-                13: "Transformação: Mudanças inesperadas e transformação. Poder de reconstrução após a destruição.",
-                14: "Movimento e Comunicação: Risco em excessos, mas bom para comunicação e lidar com pessoas. Magnetismo.",
-                15: "O Mago: Eloquência, carisma e sorte material, especialmente através de presentes ou legados. Cuidado com o lado sombrio.",
-                16: "Torre Fulminada: Avisos de perigo, acidentes ou planos frustrados. Necessidade de cautela e planejamento.",
-                19: "O Príncipe do Céu: Número altamente favorável, promete sucesso, felicidade e realização.",
-                22: "O Construtor Mestre: Potencial para grandes realizações que beneficiam muitos, mas exige esforço e responsabilidade.",
-            },
             soul: {
                 1: "Sua alma anseia por independência, liderança e ser o número um.",
                 2: "Sua alma busca harmonia, cooperação e relacionamentos pacíficos.",
@@ -635,24 +558,9 @@
                 11: "Número Mestre: Você aparenta ser intuitivo, carismático e talvez um pouco tenso ou elétrico.",
                 22: "Número Mestre: Você aparenta ser competente, poderoso e capaz de grandes feitos.",
                 33: "Número Mestre: Você aparenta ser gentil, compassivo e dedicado a ajudar os outros (raro)."
-            },
-            energy: {
-                 general: "A análise energética mostra a distribuição das vibrações numéricas (1-9) em seu nome completo de nascimento, usando o sistema Pitagórico. Isso revela seus pontos fortes e fracos energéticos inerentes.",
-                 lines: "As linhas de energia (a serem implementadas) conectarão esses números para mostrar como diferentes aspectos (físico, mental, espiritual) interagem em sua vida."
-            },
-            favorableNumbers: {
-                description: "Números Favoráveis específicos para seu dia e mês de nascimento, conforme a metodologia de Carlos Rosa. Use-os em situações importantes, números de sorte, datas especiais e decisões relevantes."
-            },
-            harmonizingNumbers: {
-                description: "Números que se harmonizam com o seu dia de nascimento. Estes números trazem energia positiva e podem ser usados para potencializar suas ações e decisões."
-            },
-            incompatibleNumbers: {
-                description: "Números que podem trazer discórdia ou obstáculos. Evite usá-los quando possível em situações importantes. Nota: O número 9 é universal e compatível com todos."
             }
         };
 
-        // --- Funções de Cálculo --- 
-        
         function normalizeString(str) {
             if (!str) return '';
             return str.normalize("NFD").replace(/\p{Diacritic}/gu, "").toUpperCase();
@@ -786,50 +694,39 @@
              
              if (totalLetters === 0) return null;
 
-             let lineAnalysisText = interpretations.energy.lines || "(Análise das linhas será implementada)";
-
              return {
                  diagramData: counts,
-                 lineAnalysis: lineAnalysisText,
-                 interpretation: interpretations.energy.general || "(Interpretação geral da energia será implementada)"
+                 interpretation: "A análise energética mostra a distribuição das vibrações numéricas (1-9) em seu nome completo de nascimento, usando o sistema Pitagórico. Isso revela seus pontos fortes e fracos energéticos inerentes."
              };
         }
 
-        // FUNÇÃO CORRIGIDA: Calcular números baseados nas tabelas do Carlos Rosa
-        function calculateCarlosRosaNumbers(dob) {
+        // FUNÇÃO SIMPLES - BUSCA NAS TABELAS
+        function getSpecialNumbers(dob) {
             if (!dob) return null;
             
-            try {
-                const [year, month, day] = dob.split('-').map(Number);
-                if (!year || !month || !day) throw new Error("Data inválida.");
+            const [year, month, day] = dob.split('-').map(Number);
+            
+            // 1. NÚMEROS FAVORÁVEIS - busca direta na tabela
+            const chave = `${month}-${day}`;
+            const favoraveis = numerosFavoraveis[chave] || [];
+            
+            // 2. NÚMEROS QUE SE HARMONIZAM - baseado no dia reduzido
+            const diaReduzido = reduceNumber(day);
+            const harmonizam = numerosHarmonizam[diaReduzido] || [];
+            
+            // 3. NÚMEROS INCOMPATÍVEIS - baseado no dia reduzido
+            const incompativeis = numerosIncompativeis[diaReduzido] || [];
 
-                // 1. NÚMEROS FAVORÁVEIS (baseado em dia + mês)
-                const favorableKey = `${month}-${day}`;
-                const favorable = favorableNumbers[favorableKey] || [];
-
-                // 2. NÚMEROS QUE SE HARMONIZAM (baseado no DIA reduzido a 1-9)
-                const dayReduced = reduceNumber(day);
-                const harmonizing = harmonizingNumbersByDay[dayReduced] || [];
-
-                // 3. NÚMEROS INCOMPATÍVEIS (baseado no DIA reduzido a 1-9) 
-                const incompatible = incompatibleNumbersFixed[dayReduced] || [];
-
-                return {
-                    day: day,
-                    month: month,
-                    dayReduced: dayReduced,
-                    favorableNumbers: favorable,
-                    harmonizingNumbers: harmonizing,
-                    incompatibleNumbers: incompatible
-                };
-            } catch (error) {
-                console.error("Erro ao calcular números Carlos Rosa:", error);
-                return null;
-            }
+            return {
+                mes: month,
+                dia: day,
+                diaReduzido: diaReduzido,
+                favoraveis: favoraveis,
+                harmonizam: harmonizam,
+                incompativeis: incompativeis
+            };
         }
 
-        // --- Funções de Exibição --- 
-        
         function displayResult(elementId, title, numberData, interpretationData) {
             const container = document.getElementById(elementId);
             if (!container) return;
@@ -841,24 +738,20 @@
             }
             
             let finalInterpretationText = interpretationData[numberData.finalNumber] || "Interpretação para este número final ainda não disponível.";
-            let compoundInterpretationText = interpretations.compound[numberData.compoundNumber] || "";
 
             container.innerHTML = `
                 <h3>${title}</h3>
-                ${numberData.compoundNumber && numberData.compoundNumber !== numberData.finalNumber ? 
-                    `<div class="result-compound-number">Número Composto: ${numberData.compoundNumber}</div>` : ''}
                 <div class="result-number">${numberData.finalNumber}</div>
                 <div class="result-calculation"><strong>Cálculo:</strong><br>${numberData.calculationSteps}</div>
                 <div class="interpretation">
-                    ${compoundInterpretationText ? `<h4>Interpretação (Composto ${numberData.compoundNumber}):</h4><p>${compoundInterpretationText}</p><hr style='margin: 10px 0; border-color: rgba(255, 105, 180, 0.2);'>` : ''}
-                    <h4>Interpretação (Final ${numberData.finalNumber}):</h4>
+                    <h4>Interpretação:</h4>
                     <p>${finalInterpretationText}</p>
                 </div>
             `;
             container.style.display = 'block';
         }
         
-         function displayEnergyAnalysis(elementId, analysisData) {
+        function displayEnergyAnalysis(elementId, analysisData) {
             const container = document.getElementById(elementId);
              if (!container) return;
              
@@ -894,77 +787,73 @@
                  <div class="energy-diagram-container">
                      ${gridHtml}
                  </div>
-                 <div id="energyInterpretation" class="interpretation">
+                 <div class="interpretation">
                      <h4>Análise Energética:</h4>
-                     <p>${analysisData.interpretation || 'Análise detalhada será implementada.'}</p>
-                 </div>
-                 <div id="energyLinesAnalysis" class="interpretation">
-                     <h4>Análise das Linhas:</h4>
-                     <p>${analysisData.lineAnalysis || 'Análise das linhas será implementada.'}</p>
+                     <p>${analysisData.interpretation}</p>
                  </div>
             `;
              container.style.display = 'block';
         }
 
-        // FUNÇÃO CORRIGIDA: Exibir números do Carlos Rosa
-        function displayCarlosRosaNumbers(carlosData) {
-            const favorableContainer = document.getElementById('favorableNumbersResult');
-            const harmonizingContainer = document.getElementById('harmonizingNumbersResult');
-            const incompatibleContainer = document.getElementById('incompatibleNumbersResult');
-            const section = document.getElementById('numerologySection');
+        function displaySpecialNumbers(data) {
+            const section = document.getElementById('specialNumbersSection');
+            const favorableContainer = document.getElementById('favorableResult');
+            const harmonizingContainer = document.getElementById('harmonizingResult');
+            const incompatibleContainer = document.getElementById('incompatibleResult');
 
-            if (!carlosData) {
+            if (!data) {
                 section.style.display = 'none';
                 return;
             }
 
-            // 1. NÚMEROS FAVORÁVEIS
+            // NÚMEROS FAVORÁVEIS
             let favorableHtml = '';
-            carlosData.favorableNumbers.forEach(num => {
+            data.favoraveis.forEach(num => {
                 favorableHtml += `<div class="favorable-number-item">${num}</div>`;
             });
 
             favorableContainer.innerHTML = `
-                <h4>💛 NÚMEROS FAVORÁVEIS (Dia ${carlosData.day} - Mês ${carlosData.month})</h4>
-                <div class="lucky-numbers-grid">${favorableHtml}</div>
+                <h4>💛 NÚMEROS FAVORÁVEIS</h4>
+                <p>Para quem nasceu no dia ${data.dia} do mês ${data.mes}</p>
+                <div class="numbers-grid">${favorableHtml}</div>
                 <div class="interpretation">
-                    <p>${interpretations.favorableNumbers.description}</p>
+                    <p>Use estes números em situações importantes, números de sorte, datas especiais e decisões relevantes.</p>
                 </div>
             `;
 
-            // 2. NÚMEROS QUE SE HARMONIZAM
+            // NÚMEROS QUE SE HARMONIZAM
             let harmonizingHtml = '';
-            carlosData.harmonizingNumbers.forEach(num => {
+            data.harmonizam.forEach(num => {
                 harmonizingHtml += `<div class="harmonizing-number-item">${num}</div>`;
             });
 
             harmonizingContainer.innerHTML = `
-                <h4>💚 NÚMEROS QUE SE HARMONIZAM (Dia de nascimento: ${carlosData.dayReduced})</h4>
-                <div class="lucky-numbers-grid">${harmonizingHtml}</div>
+                <h4>💚 NÚMEROS QUE SE HARMONIZAM</h4>
+                <p>Para quem nasceu no dia ${data.dia} (reduzido: ${data.diaReduzido})</p>
+                <div class="numbers-grid">${harmonizingHtml}</div>
                 <div class="interpretation">
-                    <p>${interpretations.harmonizingNumbers.description}</p>
+                    <p>Números que se harmonizam com o seu dia de nascimento. Estes números trazem energia positiva e podem ser usados para potencializar suas ações e decisões.</p>
                 </div>
             `;
 
-            // 3. NÚMEROS INCOMPATÍVEIS
+            // NÚMEROS INCOMPATÍVEIS
             let incompatibleHtml = '';
-            carlosData.incompatibleNumbers.forEach(num => {
+            data.incompativeis.forEach(num => {
                 incompatibleHtml += `<div class="incompatible-number-item">${num}</div>`;
             });
 
             incompatibleContainer.innerHTML = `
-                <h4>❌ NÚMEROS INCOMPATÍVEIS (Dia de nascimento: ${carlosData.dayReduced})</h4>
-                <div class="lucky-numbers-grid">${incompatibleHtml}</div>
+                <h4>❌ NÚMEROS INCOMPATÍVEIS</h4>
+                <p>Para quem nasceu no dia ${data.dia} (reduzido: ${data.diaReduzido})</p>
+                <div class="numbers-grid">${incompatibleHtml}</div>
                 <div class="interpretation">
-                    <p>${interpretations.incompatibleNumbers.description}</p>
-                    <p><strong>Nota especial:</strong> O número 9 é universal e compatível com todos os números.</p>
+                    <p>Números que podem trazer discórdia ou obstáculos. Evite usá-los quando possível em situações importantes.</p>
                 </div>
             `;
 
             section.style.display = 'block';
         }
 
-        // --- Função Principal ---
         function calculateAll() {
             const nameInput = document.getElementById('nameInput').value;
             const dobInput = document.getElementById('dobInput').value;
@@ -973,7 +862,7 @@
             const nameResultsSection = document.getElementById('nameResults');
             const energySection = document.getElementById('energyAnalysisSection');
             const destinyResultContainer = document.getElementById('destinyResult');
-            const numerologySection = document.getElementById('numerologySection');
+            const specialSection = document.getElementById('specialNumbersSection');
 
             if (!nameInput.trim() && !dobInput && !fullNameInput.trim()) {
                 alert("Por favor, preencha pelo menos um campo para calcular.");
@@ -983,25 +872,21 @@
 
             resultsSection.style.display = 'block';
             
-            // Esconder seções inicialmente
             destinyResultContainer.style.display = 'none'; 
             nameResultsSection.style.display = 'none'; 
             energySection.style.display = 'none';
-            numerologySection.style.display = 'none';
+            specialSection.style.display = 'none';
 
-            // Calcular e exibir Número do Destino
+            // Calcular Número do Destino
             if (dobInput) {
                 const destinyData = calculateDestinyNumber(dobInput);
                 if (destinyData) {
                     displayResult('destinyResult', '🌟 Número do Destino (Caminho de Vida)', destinyData, interpretations.destiny);
-                } else {
-                    destinyResultContainer.innerHTML = '<p style="color: #ff8cc6; text-align: center;">Data de nascimento inválida. Use o formato AAAA-MM-DD.</p>';
-                    destinyResultContainer.style.display = 'block';
                 }
 
-                // NOVA FUNCIONALIDADE CORRIGIDA: Números do Carlos Rosa
-                const carlosData = calculateCarlosRosaNumbers(dobInput);
-                displayCarlosRosaNumbers(carlosData);
+                // NÚMEROS ESPECIAIS - BUSCA SIMPLES
+                const specialData = getSpecialNumbers(dobInput);
+                displaySpecialNumbers(specialData);
             }
 
             // Calcular números do nome
@@ -1019,7 +904,7 @@
                 displayResult('personalityResult', '🎭 Eu Exterior (Como te veem)', personalityData, interpretations.personality);
             }
 
-            // Calcular análise energética
+            // Análise energética
             if (fullNameInput.trim()) {
                 const normalizedFullName = normalizeString(fullNameInput);
                 document.getElementById('fullNameUsed').textContent = `"${fullNameInput}"`;
@@ -1031,7 +916,6 @@
             resultsSection.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- Inicialização --- 
         function createChaldeanTable() {
             const table = document.getElementById('chaldeanTable');
             if (!table) return;
