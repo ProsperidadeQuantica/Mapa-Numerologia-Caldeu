@@ -76,18 +76,12 @@
             border-bottom: 1px solid rgba(255, 105, 180, 0.2);
             padding-bottom: 10px;
         }
-
+        
         h3 {
             color: #ff8cc6;
             margin-top: 20px;
             margin-bottom: 10px;
             font-size: 1.3em;
-        }
-
-        h4 {
-             color: #ff8cc6;
-             margin-bottom: 8px;
-             font-size: 1.1em;
         }
 
         .input-group {
@@ -194,22 +188,24 @@
             color: #e0e0e0;
         }
 
-        /* Adicionando a nova seção para os Números Favoráveis */
-        .result-block-favorable {
-            background: rgba(0, 255, 127, 0.08);
-            border: 1px solid rgba(0, 255, 127, 0.2);
-            border-left: 5px solid #00FF7F;
-            border-radius: 10px;
+        /* Adicionando área para os números favoráveis */
+        .favorable-numbers-section {
+            margin-top: 30px;
+            background: rgba(255, 105, 180, 0.08);
+            border: 1px solid rgba(255, 105, 180, 0.2);
             padding: 20px;
-            margin-bottom: 25px;
-        }
-        .result-favorable-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #00FF7F;
-            margin-bottom: 5px;
+            border-radius: 10px;
         }
 
+        .favorable-numbers-section h3 {
+            color: #ff66b2;
+        }
+
+        .favorable-numbers {
+            color: #ff8cc6;
+            font-size: 1.3em;
+        }
+        
     </style>
 </head>
 <body>
@@ -240,7 +236,7 @@
         <!-- Seção de Resultados -->
         <div id="resultsSection" class="results-section" style="display: none;">
             <h2>✨ Seu Mapa Numerológico ✨</h2>
-            
+
             <!-- Número de Destino (Data de Nascimento) -->
             <div id="destinyResult" class="result-block" style="display: none;"></div>
 
@@ -253,21 +249,26 @@
             </div>
 
             <!-- Análise Energética (Nome Completo) -->
-             <div id="energyAnalysisSection" style="display: none;">
-                 <h3>Análise Energética do Nome Completo: <span id="fullNameUsed"></span></h3>
-                 <div id="energyAnalysisResult" class="result-block">
-                     <!-- O conteúdo será preenchido pela função displayEnergyAnalysis -->
-                 </div>
+            <div id="energyAnalysisSection" style="display: none;">
+                <h3>Análise Energética do Nome Completo: <span id="fullNameUsed"></span></h3>
+                <div id="energyAnalysisResult" class="result-block">
+                    <!-- O conteúdo será preenchido pela função displayEnergyAnalysis -->
+                </div>
             </div>
 
-            <!-- Seção de Números Favoráveis -->
-            <div id="favorableNumbersResult" class="result-block-favorable" style="display: none;"></div>
+            <!-- Números Favoráveis -->
+            <div class="favorable-numbers-section" id="favorableNumbersSection" style="display: none;">
+                <h3>🔢 Números Favoráveis</h3>
+                <p id="favorableNumbers" class="favorable-numbers"></p>
+            </div>
+
         </div>
 
         <!-- Seção Informativa -->
         <div class="info-section">
             <h2>📜 Sobre a Numerologia Caldeia</h2>
             <div id="educationalContent">
+                <!-- Conteúdo educacional será adicionado aqui -->
                 <p>A Numerologia Caldeia é um sistema antigo que associa letras a números com base em suas vibrações sonoras. Acredita-se que ela revela insights profundos sobre a personalidade, o propósito de vida e os desafios de um indivíduo.</p>
                 <h3>Tabela de Correspondências Caldeia</h3>
                 <div class="chaldean-table-container">
@@ -280,55 +281,50 @@
     </div>
 
     <script>
-        // Função para calcular os Números Favoráveis
-        function calculateFavorableNumbers(day) {
-            const favorableNumbers = [];
-            let num1 = 3, num2 = 6;
+        // Lógica para calcular os números favoráveis
+        function getFavorableNumbers(dob) {
+            if (!dob) return [];
+            const [year, month, day] = dob.split('-').map(Number);
 
-            while (favorableNumbers.length < 7) {
-                const sum1 = num1 + num2;
-                const sum2 = num2 + num1;
-
-                if (sum1 !== 9) favorableNumbers.push(sum1); // Exclui 9
-                if (sum2 !== 9) favorableNumbers.push(sum2); // Exclui 9
-
-                num1 = 3;
-                num2 = 6;
+            // Defina a lógica de cálculo aqui, similar ao exemplo que você forneceu.
+            const numbers = [];
+            let num1 = day;
+            let num2 = month;
+            const destination = num1 + num2;
+            
+            // Alterna entre num1 e num2 somando-os
+            while (num1 + num2 !== destination) {
+                let sum = num1 + num2;
+                if (sum !== destination) {
+                    numbers.push(sum);
+                }
+                num1 = num2;
+                num2 = sum;
             }
-            return favorableNumbers.slice(0, 7); // Limita a 7 para não exceder a quantidade de dias favoráveis
+
+            return numbers;
         }
 
-        // Função para calcular todos os resultados
+        // Atualiza os números favoráveis
+        function updateFavorableNumbers(dob) {
+            const favorableNumbers = getFavorableNumbers(dob);
+            const favorableNumbersElement = document.getElementById('favorableNumbers');
+            if (favorableNumbers.length > 0) {
+                favorableNumbersElement.innerHTML = favorableNumbers.join(', ');
+                document.getElementById('favorableNumbersSection').style.display = 'block';
+            }
+        }
+
+        // Função principal
         function calculateAll() {
-            const nameInput = document.getElementById('nameInput').value;
             const dobInput = document.getElementById('dobInput').value;
-            const fullNameInput = document.getElementById('fullNameInput').value;
-            const resultsSection = document.getElementById('resultsSection');
-            const favorableNumbersContainer = document.getElementById('favorableNumbersResult');
 
-            if (!nameInput.trim() && !dobInput && !fullNameInput.trim()) {
-                alert("Por favor, preencha pelo menos um campo para calcular.");
-                resultsSection.style.display = 'none';
-                return;
-            }
+            // Calcular números favoráveis
+            updateFavorableNumbers(dobInput);
 
-            resultsSection.style.display = 'block';
-
-            // Calcular os números favoráveis com base no dia da data de nascimento
-            if (dobInput) {
-                const dobDay = new Date(dobInput).getDate();
-                const favorableNumbers = calculateFavorableNumbers(dobDay);
-
-                favorableNumbersContainer.innerHTML = `
-                    <h3>🌟 Números Favoráveis</h3>
-                    <p>Os melhores dias para resolver suas situações são: ${favorableNumbers.join(', ')}</p>
-                `;
-                favorableNumbersContainer.style.display = 'block';
-            }
-
-            // Calcular os números de destino, nome, etc., como você já tem no seu código.
-            // Continue com o cálculo do número do destino e outros resultados...
+            // Outras funções já existentes
         }
     </script>
+
 </body>
 </html>
