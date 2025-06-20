@@ -212,11 +212,25 @@
     </div>
 
     <script>
-        const numerosFavoraveis = {
-            "1-1": [1,5], "1-2": [1,6], "1-3": [5,6], "1-4": [1,5], "1-5": [5,6], "1-6": [1,6], "1-7": [1,7], "1-8": [1,3], "1-9": [6,9], "1-10": [1,5],
-            "2-1": [2,7], "2-2": [2,7], "2-3": [3,6], "2-4": [2,7], "2-5": [3,6], "2-6": [1,6], "2-7": [3,7], "2-8": [2,3], "2-9": [1,6], "2-10": [2,7],
-            // Continuar com os outros valores...
-        };
+        // Função para calcular os números favoráveis excluindo o número 9
+        function getFavorableNumbers(day, month) {
+            const favorableNumbers = [];
+            let currentSum = day + month;
+
+            while (currentSum <= 31) {
+                if (currentSum !== 9) {  // Exclui o número 9
+                    favorableNumbers.push(currentSum);
+                }
+                // Alterna somando os números favoráveis (dia e mês)
+                if (currentSum % 2 === 0) {
+                    currentSum += day;
+                } else {
+                    currentSum += month;
+                }
+            }
+
+            return favorableNumbers;
+        }
 
         const numerosHarmonizam = {
             1: [3,4,9],
@@ -265,7 +279,7 @@
             const [year, month, day] = dob.split('-').map(Number);
             const reducedDay = reduceNumber(day);
             const chave = `${month}-${day}`;
-            const favoraveis = numerosFavoraveis[chave] || [];
+            const favoraveis = getFavorableNumbers(day, month);
 
             const harmonizam = numerosHarmonizam[reducedDay] || [];
             const incompativeis = numerosIncompativeis[reducedDay] || [];
