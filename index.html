@@ -342,6 +342,70 @@
             word-wrap: break-word;
         }
 
+        /* Estilos para a seção de signo e gênio */
+        .zodiac-section {
+            margin-top: 20px;
+            background: rgba(255, 105, 180, 0.08);
+            border-radius: 10px;
+            padding: 20px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+        }
+        
+        .zodiac-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .zodiac-sign {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid rgba(255, 105, 180, 0.2);
+        }
+        
+        .zodiac-title {
+            font-size: 1.3em;
+            color: #ff8cc6;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .zodiac-genie {
+            font-size: 1.1em;
+            color: #e8e8e8;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .zodiac-element {
+            font-size: 1em;
+            color: #aaa;
+            margin-bottom: 10px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .zodiac-planet {
+            margin-top: 15px;
+        }
+        
+        .planet-title {
+            font-size: 1.1em;
+            color: #ff8cc6;
+            margin-bottom: 5px;
+        }
+        
+        .planet-description {
+            font-size: 0.95em;
+            color: #e0e0e0;
+            line-height: 1.5;
+        }
+
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .container {
@@ -358,6 +422,9 @@
             }
             .primordial-grid {
                 grid-template-columns: 1fr;
+            }
+            .zodiac-info {
+                flex-direction: column;
             }
         }
         
@@ -417,6 +484,9 @@
             
             <!-- Número Primordial e Números Relacionados -->
             <div id="primordialResult" style="display: none;"></div>
+            
+            <!-- Signo, Gênio e Planetas -->
+            <div id="zodiacResult" class="zodiac-section" style="display: none;"></div>
 
             <!-- Números do Nome (Expressão, Alma, Personalidade) -->
             <div id="nameResults" style="display: none;">
@@ -499,6 +569,168 @@
                 7: [1, 6, 8],
                 8: [4, 5, 7, 8]
             }
+        };
+        
+        // Dados dos Signos, Gênios e Planetas
+        const zodiacData = {
+            signs: [
+                {
+                    name: "Áries",
+                    dateRange: "21 de março a 20 de abril",
+                    genie: "VEHUIAH",
+                    element: "Fogo",
+                    planets: [
+                        {
+                            name: "Marte",
+                            description: "Marte, o planeta da ação e da guerra, rege Áries. Marte no Mapa Astral representa nossa vitalidade, agressividade, coragem e capacidade de lidar com desafios."
+                        }
+                    ]
+                },
+                {
+                    name: "Touro",
+                    dateRange: "21 de abril a 20 de maio",
+                    genie: "JELIEL",
+                    element: "Terra",
+                    planets: [
+                        {
+                            name: "Vênus",
+                            description: "Vênus, o planeta do amor e da beleza, governa Touro. Vênus no Mapa Astral é o planeta do amor, dos relacionamentos, mas também das finanças e do nosso estilo pessoal."
+                        }
+                    ]
+                },
+                {
+                    name: "Gêmeos",
+                    dateRange: "21 de maio a 20 de junho",
+                    genie: "SITAEL",
+                    element: "Ar",
+                    planets: [
+                        {
+                            name: "Mercúrio",
+                            description: "Mercúrio, o mensageiro dos deuses, rege Gêmeos, dotando este signo de uma mente ágil e comunicativa. Mercúrio no Mapa Astral revela como funcionam nossos pensamentos, nossa mente, nossa comunicação – seja fala ou escrita – e nosso aprendizado."
+                        }
+                    ]
+                },
+                {
+                    name: "Câncer",
+                    dateRange: "21 de junho a 22 de julho",
+                    genie: "ELEMIAH",
+                    element: "Água",
+                    planets: [
+                        {
+                            name: "Lua",
+                            description: "A Lua, símbolo das emoções e dos ciclos, governa Câncer, fazendo deste signo profundamente sensível e intuitivo. No Mapa Astral, a Lua rege nossa alimentação, maternidade, lar, energia feminina e vida emocional."
+                        }
+                    ]
+                },
+                {
+                    name: "Leão",
+                    dateRange: "23 de julho a 22 de agosto",
+                    genie: "MAHASIAH",
+                    element: "Fogo",
+                    planets: [
+                        {
+                            name: "Sol",
+                            description: "O Sol rege Leão porque este signo representa a vitalidade, a expressão pessoal, a criatividade e a liderança, qualidades associadas ao Sol. Na mitologia, o Sol é o centro do sistema solar, simbolizando o eu central e a essência do ser. No Mapa Astral, o Sol rege a nossa essência."
+                        }
+                    ]
+                },
+                {
+                    name: "Virgem",
+                    dateRange: "23 de agosto a 22 de setembro",
+                    genie: "LELAHEL",
+                    element: "Terra",
+                    planets: [
+                        {
+                            name: "Mercúrio",
+                            description: "Mercúrio também rege Virgem, mas de uma maneira diferente de Gêmeos. Em Virgem, Mercúrio confere uma abordagem analítica, detalhista e prática. No Mapa Astral, Mercúrio também ajuda a melhorarmos a eficácia das nossas habilidades de comunicação e pensamento."
+                        }
+                    ]
+                },
+                {
+                    name: "Libra",
+                    dateRange: "23 de setembro a 22 de outubro",
+                    genie: "ANIEL",
+                    element: "Ar",
+                    planets: [
+                        {
+                            name: "Vênus",
+                            description: "Vênus também governa Libra, destacando o amor pela beleza, equilíbrio e relacionamentos harmoniosos. Vênus no Mapa Sexual mostra como cada signo ama."
+                        }
+                    ]
+                },
+                {
+                    name: "Escorpião",
+                    dateRange: "23 de outubro a 21 de novembro",
+                    genie: "HAAMIAH",
+                    element: "Água",
+                    planets: [
+                        {
+                            name: "Plutão",
+                            description: "Escorpião é tradicionalmente governado por Marte, mas Plutão também exerce regência significativa. Plutão traz intensidade, transformação e profundidade emocional."
+                        },
+                        {
+                            name: "Marte",
+                            description: "Marte acrescenta coragem e assertividade. Marte no Mapa Astral é como um motor interno que impulsiona nossas iniciativas e determinação."
+                        }
+                    ]
+                },
+                {
+                    name: "Sagitário",
+                    dateRange: "22 de novembro a 21 de dezembro",
+                    genie: "REHAEL",
+                    element: "Fogo",
+                    planets: [
+                        {
+                            name: "Júpiter",
+                            description: "Júpiter, o gigante do sistema solar e planeta da expansão, rege Sagitário, conferindo otimismo, aventura e uma busca incessante por conhecimento. Júpiter no Mapa Astral rege nossas oportunidades, crescimento pessoal e objetivo de vida."
+                        }
+                    ]
+                },
+                {
+                    name: "Capricórnio",
+                    dateRange: "22 de dezembro a 20 de janeiro",
+                    genie: "YEIAZEL",
+                    element: "Terra",
+                    planets: [
+                        {
+                            name: "Saturno",
+                            description: "Saturno, o planeta do tempo e da disciplina, governa Capricórnio, instilando seriedade, ambição e perseverança. Saturno no Mapa Astral é a representação das nossas inseguranças, dificuldades e medos e, ao mesmo tempo, revela nosso lado mais maduro na vida."
+                        }
+                    ]
+                },
+                {
+                    name: "Aquário",
+                    dateRange: "21 de janeiro a 19 de fevereiro",
+                    genie: "HAHAHEL",
+                    element: "Ar",
+                    planets: [
+                        {
+                            name: "Urano",
+                            description: "Aquário é regido por Urano, o planeta da inovação e revolução. Urano no Mapa Astral revela nossa originalidade, independência e visão futurista."
+                        },
+                        {
+                            name: "Saturno",
+                            description: "Saturno representa nosso pragmatismo e responsabilidade."
+                        }
+                    ]
+                },
+                {
+                    name: "Peixes",
+                    dateRange: "20 de fevereiro a 20 de março",
+                    genie: "MIKAEL",
+                    element: "Água",
+                    planets: [
+                        {
+                            name: "Netuno",
+                            description: "Netuno, o planeta dos sonhos e da espiritualidade, rege Peixes. Netuno no Mapa Astral sinaliza em quais circunstâncias nós podemos nos iludir mais, mas também nossa conexão com o espiritual."
+                        },
+                        {
+                            name: "Júpiter",
+                            description: "Júpiter traz expansão e sabedoria. Júpiter no Mapa Astral representa nossa busca pela felicidade emocional e espiritual."
+                        }
+                    ]
+                }
+            ]
         };
 
         // Interpretações
@@ -638,7 +870,8 @@
                     finalNumber: finalResult.finalNumber,
                     calculationSteps: calculationSteps,
                     compoundNumber: compoundNumber,
-                    day: day
+                    day: day,
+                    month: month
                 };
             } catch (error) {
                 console.error("Erro ao calcular número do destino:", error);
@@ -675,6 +908,55 @@
                 neutralNumbers: neutralNumbers,
                 incompatibleNumbers: incompatibleNumbers
             };
+        }
+        
+        function getZodiacSign(day, month) {
+            if (!day || !month) return null;
+            
+            // Ajuste para o formato de data (month é 1-12)
+            const date = new Date(2000, month - 1, day); // Usamos 2000 como ano qualquer
+            
+            for (const sign of zodiacData.signs) {
+                const signDates = sign.dateRange.split(" a ");
+                const startDateParts = signDates[0].split(" de ");
+                const endDateParts = signDates[1].split(" de ");
+                
+                const startMonth = getMonthNumber(startDateParts[1]);
+                const startDay = parseInt(startDateParts[0]);
+                const endMonth = getMonthNumber(endDateParts[1]);
+                const endDay = parseInt(endDateParts[0]);
+                
+                const startDate = new Date(2000, startMonth - 1, startDay);
+                const endDate = new Date(2000, endMonth - 1, endDay);
+                
+                // Caso especial para Peixes que cruza o ano
+                if (sign.name === "Peixes") {
+                    if ((month === 2 && day >= 20) || (month === 3 && day <= 20)) {
+                        return sign;
+                    }
+                } 
+                // Caso especial para Capricórnio que cruza o ano
+                else if (sign.name === "Capricórnio") {
+                    if ((month === 12 && day >= 22) || (month === 1 && day <= 20)) {
+                        return sign;
+                    }
+                }
+                // Para os outros signos
+                else if ((month === startMonth && day >= startDay) || (month === endMonth && day <= endDay)) {
+                    return sign;
+                }
+            }
+            
+            return null;
+        }
+        
+        function getMonthNumber(monthName) {
+            const months = {
+                "janeiro": 1, "fevereiro": 2, "março": 3, "abril": 4,
+                "maio": 5, "junho": 6, "julho": 7, "agosto": 8,
+                "setembro": 9, "outubro": 10, "novembro": 11, "dezembro": 12
+            };
+            return months[monthName.toLowerCase()] || 0;
         }
 
         function calculateNameNumber(name, valueMap, filterType = 'all') {
@@ -836,6 +1118,49 @@
             container.style.display = 'block';
         }
         
+        function displayZodiacInfo(day, month) {
+            const container = document.getElementById('zodiacResult');
+            if (!container) return;
+            
+            if (!day || !month) {
+                container.style.display = 'none';
+                container.innerHTML = '';
+                return;
+            }
+            
+            const zodiacSign = getZodiacSign(day, month);
+            if (!zodiacSign) {
+                container.style.display = 'none';
+                return;
+            }
+            
+            let planetsHtml = '';
+            zodiacSign.planets.forEach(planet => {
+                planetsHtml += `
+                    <div class="zodiac-planet">
+                        <div class="planet-title">${planet.name}</div>
+                        <div class="planet-description">${planet.description}</div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = `
+                <h3>♈️ Signo Solar: ${zodiacSign.name} (${zodiacSign.dateRange})</h3>
+                <div class="zodiac-info">
+                    <div class="zodiac-sign">
+                        <div class="zodiac-title">Gênio da Kabalá</div>
+                        <div class="zodiac-genie">${zodiacSign.genie}</div>
+                        <div class="zodiac-element">Elemento: ${zodiacSign.element}</div>
+                    </div>
+                    <div class="zodiac-sign">
+                        <div class="zodiac-title">Planeta(s) Regente(s)</div>
+                        ${planetsHtml}
+                    </div>
+                </div>
+            `;
+            container.style.display = 'block';
+        }
+        
         function displayEnergyAnalysis(elementId, analysisData) {
             const container = document.getElementById(elementId);
              if (!container) return;
@@ -895,6 +1220,7 @@
             const energySection = document.getElementById('energyAnalysisSection');
             const destinyResultContainer = document.getElementById('destinyResult');
             const primordialResultContainer = document.getElementById('primordialResult');
+            const zodiacResultContainer = document.getElementById('zodiacResult');
             const expressionResultContainer = document.getElementById('expressionResult');
             const soulResultContainer = document.getElementById('soulUrgeResult');
             const personalityResultContainer = document.getElementById('personalityResult');
@@ -909,6 +1235,7 @@
             resultsSection.style.display = 'block';
             destinyResultContainer.style.display = 'none'; 
             primordialResultContainer.style.display = 'none';
+            zodiacResultContainer.style.display = 'none';
             nameResultsSection.style.display = 'none'; 
             expressionResultContainer.style.display = 'none';
             soulResultContainer.style.display = 'none';
@@ -921,6 +1248,7 @@
                  if (destinyData) {
                     displayResult('destinyResult', '🌟 Número do Destino (Caminho de Vida)', destinyData, interpretations.destiny);
                     displayPrimordialResult(destinyData.day);
+                    displayZodiacInfo(destinyData.day, destinyData.month);
                  } else {
                      destinyResultContainer.innerHTML = '<p style="color: #ff8cc6; text-align: center;">Data de nascimento inválida. Use o formato AAAA-MM-DD.</p>';
                      destinyResultContainer.style.display = 'block';
