@@ -804,7 +804,7 @@
             },
             energy: {
                  general: "A análise energética mostra a distribuição das vibrações numéricas (1-9) em seu nome completo de nascimento, usando o sistema Pitagórico. Isso revela seus pontos fortes e fracos energéticos inerentes.",
-                 lines: "As linhas de energia (a serem implementadas) conectarão esses números para mostrar como diferentes aspectos (físico, mental, espiritual) interagem em sua vida."
+                 lines: "As linhas de energia (a serem implementadas) conectarão esses números para mostrar como diferentes aspectos (físico, mental, spiritual) interagem em sua vida."
             },
             primordial: {
                  general: "O Número Primordial é calculado a partir do dia do seu nascimento. Ele revela números da sorte, neutros e incompatíveis que influenciam sua vida.",
@@ -848,18 +848,24 @@
                 const [year, month, day] = dob.split('-').map(Number);
                 if (!year || !month || !day || year < 1000) throw new Error("Data inválida ou ano incompleto.");
 
-                const reducedDayResult = reduceNumber(day, true);
-                const reducedMonthResult = reduceNumber(month, true);
-                const reducedYearResult = reduceNumber(year, true);
+                // Função auxiliar para reduzir dia e mês (exceto números mestres)
+                const reduceDayMonth = (num) => {
+                    if (num === 11 || num === 22) return num; // mantém números mestres
+                    return reduceNumber(num);
+                };
 
-                const compoundNumber = reducedDayResult.finalNumber + reducedMonthResult.finalNumber + reducedYearResult.finalNumber;
+                const reducedDay = reduceDayMonth(day);
+                const reducedMonth = reduceDayMonth(month);
+                const reducedYear = reduceNumber(year);
+
+                const compoundNumber = reducedDay + reducedMonth + reducedYear;
                 const finalResult = reduceNumber(compoundNumber, true);
 
                 let calculationSteps = 
-                    `Dia (${day}): ${reducedDayResult.calculationSteps.substring(reducedDayResult.calculationSteps.indexOf('=') + 1).trim()}<br>
-                     Mês (${month}): ${reducedMonthResult.calculationSteps.substring(reducedMonthResult.calculationSteps.indexOf('=') + 1).trim()}<br>
-                     Ano (${year}): ${reducedYearResult.calculationSteps.substring(reducedYearResult.calculationSteps.indexOf('=') + 1).trim()}<br>
-                     Soma Reduzida: ${reducedDayResult.finalNumber} + ${reducedMonthResult.finalNumber} + ${reducedYearResult.finalNumber} = ${compoundNumber}`;
+                    `Dia (${day}): ${day} → ${reducedDay}<br>
+                     Mês (${month}): ${month} → ${reducedMonth}<br>
+                     Ano (${year}): ${reduceNumber(year, true).calculationSteps}<br>
+                     Soma Reduzida: ${reducedDay} + ${reducedMonth} + ${reducedYear} = ${compoundNumber}`;
                 
                 if (compoundNumber !== finalResult.finalNumber && ![11, 22, 33].includes(compoundNumber)) {
                      let finalReductionStep = finalResult.calculationSteps.substring(finalResult.calculationSteps.indexOf('→'));
