@@ -843,48 +843,49 @@
         }
 
         function calculateDestinyNumber(dob) {
-            if (!dob) return null;
-            try {
-                const [year, month, day] = dob.split('-').map(Number);
-                if (!year || !month || !day || year < 1000) throw new Error("Data inválida ou ano incompleto.");
+    if (!dob) return null;
+    try {
+        const [year, month, day] = dob.split('-').map(Number);
+        if (!year || !month || !day || year < 1000) throw new Error("Data inválida ou ano incompleto.");
 
-                // Função auxiliar para reduzir dia e mês (exceto números mestres)
-                const reduceDayMonth = (num) => {
-                    if (num === 11 || num === 22) return num; // mantém números mestres
-                    return reduceNumber(num);
-                };
+        // Função para reduzir dia e mês (exceto números mestres 11 e 22)
+        const reduceDayMonth = (num) => {
+            if (num === 11 || num === 22) return num; // mantém números mestres
+            // Reduz normalmente (ex: 22 → 2+2=4, 21 → 2+1=3)
+            return num < 10 ? num : reduceNumber(num);
+        };
 
-                const reducedDay = reduceDayMonth(day);
-                const reducedMonth = reduceDayMonth(month);
-                const reducedYear = reduceNumber(year);
+        const reducedDay = reduceDayMonth(day);
+        const reducedMonth = reduceDayMonth(month);
+        const reducedYear = reduceNumber(year);
 
-                const compoundNumber = reducedDay + reducedMonth + reducedYear;
-                const finalResult = reduceNumber(compoundNumber, true);
+        const compoundNumber = reducedDay + reducedMonth + reducedYear;
+        const finalResult = reduceNumber(compoundNumber, true);
 
-                let calculationSteps = 
-                    `Dia (${day}): ${day} → ${reducedDay}<br>
-                     Mês (${month}): ${month} → ${reducedMonth}<br>
-                     Ano (${year}): ${reduceNumber(year, true).calculationSteps}<br>
-                     Soma Reduzida: ${reducedDay} + ${reducedMonth} + ${reducedYear} = ${compoundNumber}`;
-                
-                if (compoundNumber !== finalResult.finalNumber && ![11, 22, 33].includes(compoundNumber)) {
-                     let finalReductionStep = finalResult.calculationSteps.substring(finalResult.calculationSteps.indexOf('→'));
-                     calculationSteps += `<br>Redução Final: ${compoundNumber} ${finalReductionStep}`;
-                }
-
-                return {
-                    finalNumber: finalResult.finalNumber,
-                    calculationSteps: calculationSteps,
-                    compoundNumber: compoundNumber,
-                    day: day,
-                    month: month
-                };
-            } catch (error) {
-                console.error("Erro ao calcular número do destino:", error);
-                alert("Formato de data inválido. Use AAAA-MM-DD.");
-                return null;
-            }
+        let calculationSteps = 
+            `Dia (${day}): ${day} → ${reducedDay}<br>
+             Mês (${month}): ${month} → ${reducedMonth}<br>
+             Ano (${year}): ${reduceNumber(year, true).calculationSteps}<br>
+             Soma Reduzida: ${reducedDay} + ${reducedMonth} + ${reducedYear} = ${compoundNumber}`;
+        
+        if (compoundNumber !== finalResult.finalNumber && ![11, 22, 33].includes(compoundNumber)) {
+             let finalReductionStep = finalResult.calculationSteps.substring(finalResult.calculationSteps.indexOf('→'));
+             calculationSteps += `<br>Redução Final: ${compoundNumber} ${finalReductionStep}`;
         }
+
+        return {
+            finalNumber: finalResult.finalNumber,
+            calculationSteps: calculationSteps,
+            compoundNumber: compoundNumber,
+            day: day,
+            month: month
+        };
+    } catch (error) {
+        console.error("Erro ao calcular número do destino:", error);
+        alert("Formato de data inválido. Use AAAA-MM-DD.");
+        return null;
+    }
+}
 
         function calculatePrimordialNumber(day) {
             if (!day) return null;
